@@ -1,0 +1,25 @@
+# Dependency (Folder ini sangat berat, biarkan orang lain install sendiri via npm)
+node_modules/
+
+# Secrets & Config (SANGAT PENTING: Jangan sampai Token/Password bocor!)
+.env
+config.json
+
+# Database Local (Jika Anda menggunakan SQLite, abaikan file db-nya)
+*.sqlite
+*.db
+
+# OS Metadata (File sampah dari Windows/Mac)
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# Editor Settings (Opsional: agar settingan VS Code pribadi tidak ikut)
+.vscode/
+.idea/
