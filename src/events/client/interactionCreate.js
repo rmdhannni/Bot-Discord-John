@@ -1,29 +1,54 @@
+const CommandPermission = require('../../models/CommandPermission');
+const { PermissionFlagsBits } = require('discord.js');
+
 module.exports = {
     name: 'interactionCreate',
     once: false,
-    
+
     async execute(interaction, client) {
-        // Jika yang memicu interaksi bukan Slash Command, abaikan
+        // Abaikan jika bukan slash command
         if (!interaction.isChatInputCommand()) return;
 
-        // Cari command di dalam memori bot berdasarkan nama yang diketik user
+        // Cari file command berdasarkan namanya
         const command = client.commands.get(interaction.commandName);
-
-        if (!command) {
-            return interaction.reply({ content: 'Command tidak ditemukan atau sedang error.', ephemeral: true });
-        }
+        if (!command) return;
 
         try {
-            // Jalankan fungsi execute() yang ada di setiap file command kita
+            // ==========================================================
+            // 🛡️ GATEKEEPER: CEK CUSTOM PERMISSION DARI DATABASE
+            // ==========================================================
+            // Abaikan pengecekan jika user adalah Administrator (Admin bebas pakai apa saja)
+            if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
+                
+                const permData = await CommandPermission.findOne({
+                    where: { guildId: interaction.guild.id, commandName: interaction.commandName }
+                });
+
+                // Jika command ini punya batasan role di database (Array tidak kosong)
+                if (permData && permData.allowedRoles && permData.allowedRoles.length > 0) {
+                    
+                    // Cek apakah member memiliki setidaknya satu dari role yang diizinkan
+                    const hasAccess = interaction.member.roles.cache.some(role => permData.allowedRoles.includes(role.id));
+
+                    if (!hasAccess) {
+                        return interaction.reply({ 
+                            content: `🔒 Akses Ditolak! Kamu tidak memiliki role yang dibutuhkan untuk menggunakan \`/${interaction.commandName}\`.`, 
+                            ephemeral: true 
+                        });
+                    }
+                }
+            }
+            // ==========================================================
+
+            // Jika lolos dari penjaga gerbang, jalankan command-nya
             await command.execute(interaction);
+
         } catch (error) {
-            console.error(`[ERROR] Saat menjalankan command ${interaction.commandName}:`, error);
-            const reply = { content: 'Terjadi kesalahan internal saat mengeksekusi command ini!', ephemeral: true };
-            
+            console.error(`[ERROR] Terjadi kesalahan saat menjalankan /${interaction.commandName}:`, error);
             if (interaction.replied || interaction.deferred) {
-                await interaction.followUp(reply);
+                await interaction.followUp({ content: '❌ Terjadi kesalahan saat mengeksekusi command ini!', ephemeral: true });
             } else {
-                await interaction.reply(reply);
+                await interaction.reply({ content: '❌ Terjadi kesalahan saat mengeksekusi command ini!', ephemeral: true });
             }
         }
     }

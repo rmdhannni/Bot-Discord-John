@@ -64,13 +64,17 @@ class BotClient extends Client {
             await sequelize.authenticate();
             console.log('[DATABASE] Berhasil terhubung ke MySQL.');
             
-            // 📍 INI BAGIAN YANG TERLEWAT: 
-            // Kita harus memuat modelnya dulu agar Sequelize tahu tabel apa yang harus dibuat
+            // Model yang lama
             require('../models/GuildConfig');
             require('../models/BoosterUser');
             
-            // Perintah ini yang menggantikan script SQL manual!
-            // { alter: true } memastikan jika nanti Anda tambah kolom baru di kode, tabel di MySQL ikut terupdate.
+            // 📍 TAMBAHKAN MODEL BARU INI
+            require('../models/UserProfile');
+            require('../models/Badge');
+            require('../models/Achievement');
+            require('../models/CommandPermission');
+            require('../models/LevelReward');
+            
             await sequelize.sync({ alter: true });
             console.log('[DATABASE] Semua tabel telah disinkronkan.');
         } catch (error) {

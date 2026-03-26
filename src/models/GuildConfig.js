@@ -23,6 +23,10 @@ const GuildConfig = sequelize.define('GuildConfig', {
         type: DataTypes.STRING,
         allowNull: true, // Kategori untuk Personal Channels (pcs)
     },
+    snipeRoleId: {
+        type: DataTypes.STRING,
+        allowNull: true 
+    },
     welcomeMessage: {
     type: DataTypes.TEXT,
     allowNull: true,
