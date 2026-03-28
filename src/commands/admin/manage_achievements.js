@@ -57,7 +57,7 @@ class ManageAchievementsCommand extends BaseCommand {
                 await Achievement.create({ guildId, code, label, description, emoji });
 
                 const embed = new EmbedBuilder()
-                    .setColor('#2ECC71')
+                    .setColor('#95A5A6')
                     .setTitle('✅ Achievement Dibuat!')
                     .setDescription(`Admin sekarang bisa membagikan Achievement ini menggunakan \`/achievements_admin give\`.\n\n**Detail:**\n${emoji} **${label}** (\`${code}\`)\n*${description}*`);
 
@@ -93,7 +93,7 @@ class ManageAchievementsCommand extends BaseCommand {
                 await userProfile.save();
 
                 const embed = new EmbedBuilder()
-                    .setColor('#F1C40F')
+                    .setColor('#95A5A6')
                     .setTitle('🎉 Achievement Unlocked!')
                     .setDescription(`Selamat! ${targetUser} telah mendapatkan pencapaian:\n\n${achData.emoji} **${achData.label}**\n*${achData.description}*`);
 

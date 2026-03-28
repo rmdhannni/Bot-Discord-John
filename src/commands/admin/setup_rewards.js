@@ -82,7 +82,7 @@ class SetupRewardsCommand extends BaseCommand {
                 }
 
                 const embed = new EmbedBuilder()
-                    .setColor('#3498DB')
+                    .setColor('#95A5A6')
                     .setTitle('🏆 Daftar Level Role Rewards')
                     .setDescription(rewards.map(r => `**Level ${r.level}** ➡️ <@&${r.roleId}>`).join('\n'));
 

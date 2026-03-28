@@ -35,7 +35,7 @@ class SetupSnipeCommand extends BaseCommand {
             await config.save();
 
             const embed = new EmbedBuilder()
-                .setColor('#2ECC71')
+                .setColor('#95A5A6')
                 .setTitle('⚙️ Pengaturan Snipe Berhasil!')
                 .setDescription(`Sekarang hanya member dengan role ${targetRole} (dan Admin) yang bisa menggunakan command \`/snipe\`.`);
 

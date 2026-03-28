@@ -20,7 +20,7 @@ class PingCommand extends BaseCommand {
         const apiLatency = Math.round(this.client.ws.ping);
 
         const embed = new EmbedBuilder()
-            .setColor(latency < 200 ? '#2ECC71' : '#E67E22') // Hijau jika lancar, Orange jika agak lambat
+            .setColor('#95A5A6') // Hijau jika lancar, Orange jika agak lambat
             .setTitle('🏓 Pong!')
             .addFields(
                 { name: '🤖 Bot Latency', value: `\`${latency}ms\``, inline: true },

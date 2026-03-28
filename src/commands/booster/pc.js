@@ -104,7 +104,7 @@ class PcCommand extends BaseCommand {
                 await boosterData.save();
 
                 const embed = new EmbedBuilder()
-                    .setColor('#FF73FA')
+                    .setColor('#95A5A6')
                     .setTitle('🎉 Personal Channel Dibuat!')
                     .setDescription(`Channel kamu siap digunakan: ${newChannel}\nKamu memiliki akses penuh untuk mengatur channel ini.`);
 

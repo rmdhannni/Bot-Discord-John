@@ -23,7 +23,7 @@ class HelpCommand extends BaseCommand {
         });
 
         const embed = new EmbedBuilder()
-            .setColor('#9B59B6')
+            .setColor('#95A5A6')
             .setTitle('📚 Menu Bantuan (Help)')
             .setDescription('Berikut adalah daftar perintah yang bisa kamu gunakan:')
             .setThumbnail(this.client.user.displayAvatarURL());

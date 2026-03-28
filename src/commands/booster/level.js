@@ -53,7 +53,7 @@ class LevelCommand extends BaseCommand {
                 // Membuat "Level Card" sederhana menggunakan Embed
                 // Anda bisa mengintegrasikan library pembuat gambar (seperti canvas/napi-rs) nanti jika ingin berupa gambar
                 const embed = new EmbedBuilder()
-                    .setColor('#FF73FA') // Warna pink khas Booster Discord
+                    .setColor('#95A5A6') // Warna pink khas Booster Discord
                     .setAuthor({ name: `Kartu Level Boost: ${member.user.username}`, iconURL: member.user.displayAvatarURL({ dynamic: true }) })
                     .setThumbnail(guild.iconURL({ dynamic: true }))
                     .addFields(
@@ -94,7 +94,7 @@ class LevelCommand extends BaseCommand {
                 */
 
                 const embed = new EmbedBuilder()
-                    .setColor('#2ECC71')
+                    .setColor('#95A5A6')
                     .setTitle('🎉 Klaim Level Role Berhasil!')
                     .setDescription(`Berdasarkan catatan **${totalBoosts} Boosts**, sistem sedang memeriksa dan memberikan role hadiah yang sesuai untukmu.\n\n*(Catatan Dev: Sistem sinkronisasi otomatis sedang dikembangkan)*`);
 

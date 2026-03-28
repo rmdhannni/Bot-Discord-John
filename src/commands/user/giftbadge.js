@@ -137,7 +137,7 @@ class GiftBadgeCommand extends BaseCommand {
 
                 // 7. Kirim Pengumuman Publik
                 const embed = new EmbedBuilder()
-                    .setColor('#E67E22') // Warna oranye (Trade)
+                    .setColor('#95A5A6') // Warna oranye (Trade)
                     .setTitle('🤝 Transfer Badge Berhasil!')
                     .setDescription(`${interaction.user} telah dengan ikhlas memberikan **${badgesToTransfer.length} badge** miliknya kepada ${targetUser}!\n\n**Badge yang berpindah tangan:**\n${badgeNames.join('\n')}`)
                     .setFooter({ text: 'Hak milik badge telah resmi berpindah.' });

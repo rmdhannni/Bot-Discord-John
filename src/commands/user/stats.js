@@ -22,7 +22,7 @@ class StatsCommand extends BaseCommand {
         const memoryUsage = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2);
 
         const embed = new EmbedBuilder()
-            .setColor('#3498DB')
+            .setColor('#95A5A6')
             .setAuthor({ name: this.client.user.username, iconURL: this.client.user.displayAvatarURL() })
             .setTitle('📊 Statistik Bot')
             .addFields(

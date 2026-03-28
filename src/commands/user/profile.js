@@ -109,7 +109,7 @@ class ProfileCommand extends BaseCommand {
 
     async _sendErrorReply(interaction) {
         const embed = new EmbedBuilder()
-            .setColor(0xff4757)
+            .setColor(0x95A5A6)
             .setTitle('❌ Gagal Memuat Profil')
             .setDescription(
                 'Terjadi kesalahan saat memproses kartu profil.\n' +

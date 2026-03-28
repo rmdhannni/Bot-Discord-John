@@ -109,7 +109,7 @@ class AboutCommand extends BaseCommand {
             await interaction.editReply({
                 embeds: [
                     new EmbedBuilder()
-                        .setColor(0x5865f2)
+                        .setColor(0x95A5A6)
                         .setTitle('✅ Bio Berhasil Diperbarui!')
                         .setDescription(`Bio profilmu sekarang:\n> ${validator.text}`)
                         .setFooter({ text: 'Bio akan tampil di kartu /profile kamu.' }),
@@ -136,7 +136,7 @@ class AboutCommand extends BaseCommand {
             await interaction.editReply({
                 embeds: [
                     new EmbedBuilder()
-                        .setColor(0xff9500)
+                        .setColor(0x95A5A6)
                         .setDescription('🗑️ Bio profilmu telah dihapus.'),
                 ],
             });
@@ -160,7 +160,7 @@ class AboutCommand extends BaseCommand {
             await interaction.editReply({
                 embeds: [
                     new EmbedBuilder()
-                        .setColor(0x57f287)
+                        .setColor(0x95A5A6)
                         .setTitle('📝 Bio Profilmu')
                         .setDescription(bio ? `> ${bio}` : '*Belum ada bio. Gunakan `/about set` untuk mengaturnya.*')
                         .setFooter({ text: `Maks ${ABOUT_MAX_LENGTH} karakter` }),
@@ -175,7 +175,7 @@ class AboutCommand extends BaseCommand {
     // ─── Helper embed error ───────────────────────────────────────────────────────
     _errorEmbed(message) {
         return new EmbedBuilder()
-            .setColor(0xff4757)
+            .setColor(0x95A5A6)
             .setDescription(`❌ ${message}`);
     }
 }

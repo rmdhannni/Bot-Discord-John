@@ -51,7 +51,7 @@ class ClaimCommand extends BaseCommand {
             await profile.save();
 
             const embed = new EmbedBuilder()
-                .setColor('#2ECC71')
+                .setColor('#95A5A6')
                 .setTitle('🎉 KLAIM BERHASIL!')
                 .setDescription(`Selamat! Kamu berhasil mengamankan badge limited edition: ${badge.emojiFormat} **${badge.name}**.`);
 

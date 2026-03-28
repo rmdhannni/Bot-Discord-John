@@ -52,7 +52,7 @@ class GreetCommand extends BaseCommand {
             });
 
             const embed = new EmbedBuilder()
-                .setColor('#F1C40F') // Warna kuning emas untuk notifikasi admin
+                .setColor('#95A5A6') // Warna kuning emas untuk notifikasi admin
                 .setTimestamp();
 
             if (subCommand === 'welcome') {

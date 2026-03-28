@@ -47,7 +47,7 @@ class AgeCommand extends BaseCommand {
             // ================= LOGIKA INFO DURASI =================
             if (subCommand === 'info') {
                 const embed = new EmbedBuilder()
-                    .setColor('#FF73FA')
+                    .setColor('#95A5A6')
                     .setAuthor({ name: member.user.username, iconURL: member.user.displayAvatarURL({ dynamic: true }) })
                     .setTitle('📈 Informasi Durasi Boost')
                     .addFields(
@@ -86,7 +86,7 @@ class AgeCommand extends BaseCommand {
 
                 // Tampilan sementara sebelum tabel AgeRoles selesai:
                 const embed = new EmbedBuilder()
-                    .setColor('#2ECC71')
+                    .setColor('#95A5A6')
                     .setTitle('🎁 Klaim Age Role')
                     .setDescription(`Kamu telah nge-boost selama **${totalHari} hari**.\n\n*(Sistem klaim role otomatis sedang dalam tahap integrasi dengan database Admin. Silakan cek kembali nanti!)*`);
 

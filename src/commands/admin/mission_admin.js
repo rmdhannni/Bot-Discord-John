@@ -99,7 +99,7 @@ class MissionAdminCommand extends BaseCommand {
                 const rewardText = rewardType === 'xp' ? `${rewardValue} XP` : (rewardType === 'role' ? `Role ${rewardValue}` : `Badge ID: ${rewardValue}`);
 
                 const embed = new EmbedBuilder()
-                    .setColor('#E74C3C')
+                    .setColor('#95A5A6')
                     .setTitle('📜 Misi Baru Tersedia!')
                     .setDescription(`Admin baru saja membuat misi berbatas waktu. Ayo selesaikan!\n\n**${title}**\n*${description}*\n\n🎯 **Tugas:** ${typeText}\n🎁 **Hadiah:** ${rewardText}\n⏳ **Berakhir Pada:** <t:${Math.floor(deadline.getTime() / 1000)}:F>`)
                     .setFooter({ text: 'Ketik /missions untuk melacak progresmu' });
@@ -122,7 +122,7 @@ class MissionAdminCommand extends BaseCommand {
                 }
 
                 const embed = new EmbedBuilder()
-                    .setColor('#3498DB')
+                    .setColor('#95A5A6')
                     .setTitle('📋 Daftar Misi Aktif')
                     .setDescription(validMissions.map(m => `**${m.title}** (ID: ${m.id})\n⏳ Deadline: <t:${Math.floor(new Date(m.deadline).getTime() / 1000)}:R>`).join('\n\n'));
 

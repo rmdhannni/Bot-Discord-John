@@ -41,7 +41,7 @@ class MissionsCommand extends BaseCommand {
             });
 
             const embed = new EmbedBuilder()
-                .setColor('#E67E22')
+                .setColor('#95A5A6')
                 .setTitle('📜 Papan Misi (Quest Board)')
                 .setDescription('Selesaikan misi di bawah ini sebelum waktunya habis untuk mendapatkan hadiah menarik!');
 

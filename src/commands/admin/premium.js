@@ -50,7 +50,7 @@ class PremiumCommand extends BaseCommand {
                 // userDB.isPremium = true;
                 // await userDB.save();
 
-                embed.setColor('#F1C40F') // Emas Premium
+                embed.setColor('#95A5A6') // Emas Premium
                      .setTitle('🌟 Status Premium Diaktifkan!')
                      .setDescription(`User ${targetUser} sekarang memiliki akses ke semua fitur Premium bot!`);
             } 

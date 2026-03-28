@@ -40,7 +40,7 @@ class VoteCommand extends BaseCommand {
             // ================= LOGIKA VOTE INFO =================
             if (subCommand === 'info') {
                 const embed = new EmbedBuilder()
-                    .setColor('#3498DB')
+                    .setColor('#95A5A6')
                     .setTitle('🗳️ Dukung Bot Kami!')
                     .setDescription('Dengan melakukan vote, kamu membantu bot ini berkembang dan kamu akan mendapatkan **Tiket Premium** sebagai hadiah!')
                     .addFields(
@@ -67,7 +67,7 @@ class VoteCommand extends BaseCommand {
                 // await userDB.save();
 
                 const embed = new EmbedBuilder()
-                    .setColor('#2ECC71')
+                    .setColor('#95A5A6')
                     .setTitle('🎉 Klaim Berhasil!')
                     .setDescription(`Terima kasih atas dukunganmu, ${user.username}!\nKamu telah menukarkan 1 tiket vote dan mendapatkan **Akses Premium** selama 24 jam.`);
 
@@ -84,7 +84,7 @@ class VoteCommand extends BaseCommand {
                 // guildDB.voteScore += 1;
 
                 const embed = new EmbedBuilder()
-                    .setColor('#F1C40F')
+                    .setColor('#95A5A6')
                     .setTitle('💖 Donasi Vote Berhasil!')
                     .setDescription(`Kamu telah mendonasikan 1 tiket vote untuk server **${interaction.guild.name}**!`);
 

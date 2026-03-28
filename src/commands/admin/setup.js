@@ -55,7 +55,7 @@ class SetupCommand extends BaseCommand {
 
             // Siapkan embed balasan yang elegan
             const embed = new EmbedBuilder()
-                .setColor('#3498DB') // Warna biru untuk informasi
+                .setColor('#95A5A6') // Warna biru untuk informasi
                 .setTimestamp();
 
             // Logika untuk sub-command '/setup welcome'

@@ -48,7 +48,7 @@ class GuideCommand extends BaseCommand {
 
         // 2. Embed Halaman Utama (Welcome Page)
         const mainEmbed = new EmbedBuilder()
-            .setColor('#2B2D31')
+            .setColor('#95A5A6')
             .setTitle('📚 Buku Panduan Bot')
             .setDescription('Selamat datang di pusat bantuan! Bot ini dilengkapi dengan berbagai fitur canggih mulai dari sistem manajemen Server, Leveling, hingga fitur Premium khusus donatur.\n\n👇 **Silakan pilih kategori panduan dari menu di bawah ini.**')
             .setFooter({ text: 'Gunakan dropdown untuk bernavigasi' });
@@ -72,7 +72,7 @@ class GuideCommand extends BaseCommand {
             }
 
             const selected = i.values[0];
-            let newEmbed = new EmbedBuilder().setColor('#3498DB');
+            let newEmbed = new EmbedBuilder().setColor('#95A5A6');
 
             // ================= KONTEN PANDUAN =================
 

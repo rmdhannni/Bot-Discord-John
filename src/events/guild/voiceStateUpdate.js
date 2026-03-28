@@ -88,7 +88,7 @@ module.exports = {
                             // Jika Anda punya setting default channel, kirim ke sana. Untuk keamanan, kita kirim DM atau fallback.
                             try {
                                 const embed = new EmbedBuilder()
-                                    .setColor('#2ECC71')
+                                    .setColor('#95A5A6')
                                     .setTitle('🎙️ MISI VOICE SELESAI!')
                                     .setDescription(`Selamat! Kamu berhasil menyelesaikan misi **${mission.title}** dengan nongkrong di Voice Channel!\n\n🎁 **Hadiahmu:** ${rewardMsg}`);
                                 await newState.member.send({ embeds: [embed] });

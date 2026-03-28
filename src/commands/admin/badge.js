@@ -95,7 +95,7 @@ class BadgeCommand extends BaseCommand {
                 });
 
                 const embed = new EmbedBuilder()
-                    .setColor('#2ECC71')
+                    .setColor('#95A5A6')
                     .setTitle('🎖️ Badge Limited Edition Berhasil Dibuat!')
                     .setDescription(`Gambar telah diconvert menjadi Emote Discord dan disimpan ke Database.\n\n**Preview:** ${createdEmoji.toString()}\n**Nama:** \`${badgeName}\`\n**Status:** ${infoWaktu}`)
                     .setThumbnail(attachment.url);
@@ -184,7 +184,7 @@ class BadgeCommand extends BaseCommand {
 
                     // 5. Kirim Pengumuman Publik ke Channel
                     const successEmbed = new EmbedBuilder()
-                        .setColor('#F1C40F')
+                        .setColor('#95A5A6')
                         .setTitle('🎁 Badges Diberikan!')
                         .setDescription(`Selamat! ${targetUser} telah menerima **${addedCount} badge eksklusif** dari Admin:\n\n${addedNames.join('\n')}`);
 

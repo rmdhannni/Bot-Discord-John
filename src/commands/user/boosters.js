@@ -23,7 +23,7 @@ class BoostersCommand extends BaseCommand {
             .sort((a, b) => a.premiumSinceTimestamp - b.premiumSinceTimestamp);
 
         const embed = new EmbedBuilder()
-            .setColor('#FF73FA') // Pink Booster
+            .setColor('#95A5A6') // Pink Booster
             .setTitle(`💎 Server Boosters: ${guild.name}`)
             .setDescription(`Server ini memiliki **${totalBoosts} Boosts** (Tier ${tier}).\nTerima kasih kepada ${boosters.size} member luar biasa di bawah ini!`)
             .setThumbnail(guild.iconURL({ dynamic: true }));

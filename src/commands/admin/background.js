@@ -67,7 +67,7 @@ class BackgroundCommand extends BaseCommand {
                 await userProfile.save();
 
                 const embed = new EmbedBuilder()
-                    .setColor('#3498DB')
+                    .setColor('#95A5A6')
                     .setTitle('🖼️ Background Berhasil Diperbarui!')
                     .setDescription(`Custom background untuk profil ${targetUser} telah berhasil dipasang oleh Admin.`)
                     .setImage(attachment.url);
@@ -86,7 +86,7 @@ class BackgroundCommand extends BaseCommand {
                 await userProfile.save();
 
                 const embed = new EmbedBuilder()
-                    .setColor('#E74C3C')
+                    .setColor('#95A5A6')
                     .setTitle('🗑️ Background Dihapus')
                     .setDescription(`Custom background milik ${targetUser} telah dihapus dan dikembalikan ke tampilan default.`);
 

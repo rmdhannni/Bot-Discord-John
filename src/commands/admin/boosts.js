@@ -53,7 +53,7 @@ class BoostsCommand extends BaseCommand {
                 boosterData.boostCount = currentBoosts + jumlah;
                 await boosterData.save();
 
-                embed.setColor('#2ECC71')
+                embed.setColor('#95A5A6')
                      .setTitle('📈 Boost Berhasil Ditambahkan!')
                      .setDescription(`Ditambahkan **${jumlah} boost** kepada ${targetUser}.\nTotal catatan boost mereka sekarang: **${boosterData.boostCount}**`);
             } 
@@ -63,7 +63,7 @@ class BoostsCommand extends BaseCommand {
                 boosterData.boostCount = Math.max(0, currentBoosts - jumlah);
                 await boosterData.save();
 
-                embed.setColor('#E74C3C')
+                embed.setColor('#95A5A6')
                      .setTitle('📉 Boost Berhasil Dikurangi!')
                      .setDescription(`Dikurangi **${jumlah} boost** dari ${targetUser}.\nTotal catatan boost mereka sekarang: **${boosterData.boostCount}**`);
             }

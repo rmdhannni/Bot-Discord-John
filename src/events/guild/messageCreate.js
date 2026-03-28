@@ -80,7 +80,7 @@ module.exports = {
 
                         // Kirim Pengumuman Misi Selesai ke Channel
                         const embed = new EmbedBuilder()
-                            .setColor('#2ECC71')
+                            .setColor('#95A5A6')
                             .setTitle('🎊 MISI SELESAI!')
                             .setDescription(`Selamat ${message.author}! Kamu berhasil menyelesaikan misi **${mission.title}**!\n\n🎁 **Hadiahmu:** ${rewardMsg}`);
                         
@@ -156,7 +156,7 @@ module.exports = {
 
                 // Kirim ucapan selamat naik level
                 const embed = new EmbedBuilder()
-                    .setColor('#F1C40F')
+                    .setColor('#95A5A6')
                     .setDescription(`🎉 Selamat <@${userId}>! Kamu baru saja mencapai **Level ${profile.level}**!${rewardText}`);
                 
                 await message.channel.send({ embeds: [embed] });

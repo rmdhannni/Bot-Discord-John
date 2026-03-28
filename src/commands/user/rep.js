@@ -124,7 +124,7 @@ class RepCommand extends BaseCommand {
 
     _successEmbed(giver, target, totalRep) {
         return new EmbedBuilder()
-            .setColor(0x5865f2)
+            .setColor(0x95A5A6)
             .setTitle('⭐ Reputasi Diberikan!')
             .setDescription(
                 `**${giver.username}** memberikan **+1 rep** kepada **${target.username}**!`
@@ -149,7 +149,7 @@ class RepCommand extends BaseCommand {
         timeStr += `${seconds}d`;
 
         return new EmbedBuilder()
-            .setColor(0xff6b6b)
+            .setColor(0x95A5A6)
             .setTitle('⏳ Masih Cooldown!')
             .setDescription(
                 `Kamu sudah memberikan rep hari ini.\n` +
@@ -159,7 +159,7 @@ class RepCommand extends BaseCommand {
 
     _errorEmbed(message) {
         return new EmbedBuilder()
-            .setColor(0xff4757)
+            .setColor(0x95A5A6)
             .setDescription(message);
     }
 }

@@ -107,7 +107,7 @@ class GiftCommand extends BaseCommand {
                 await targetUser.roles.remove(customRole, `Ditarik kembali oleh pemilik role: ${member.user.tag}`);
 
                 const embed = new EmbedBuilder()
-                    .setColor('#E74C3C')
+                    .setColor('#95A5A6')
                     .setTitle('💔 Role Berhasil Ditarik!')
                     .setDescription(`Kamu telah mengambil kembali role ${customRole} dari ${targetUser}.`);
 

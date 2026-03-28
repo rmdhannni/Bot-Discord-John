@@ -46,7 +46,7 @@ class SnipeCommand extends BaseCommand {
             }
 
             const embed = new EmbedBuilder()
-                .setColor('#E74C3C') // Warna merah menandakan pesan dihapus
+                .setColor('#95A5A6') // Warna merah menandakan pesan dihapus
                 .setAuthor({ 
                     name: snipedMessage.author.tag, 
                     iconURL: snipedMessage.author.displayAvatarURL({ dynamic: true }) 
