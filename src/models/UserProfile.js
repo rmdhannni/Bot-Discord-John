@@ -16,24 +16,43 @@ const UserProfile = sequelize.define('UserProfile', {
     },
     level: {
         type: DataTypes.INTEGER,
-        defaultValue: 1, // Semua orang dimulai dari Level 1
+        defaultValue: 1,
+    },
+    // XP khusus dari aktivitas chat (beda dari XP global/event)
+    chatXP: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+    },
+    // Reputasi yang diberikan user lain (+rep)
+    rep: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+    },
+    // Bio singkat yang tampil di bawah kartu (About section)
+    about: {
+        type: DataTypes.STRING(280),
+        allowNull: true,
     },
     backgroundUrl: {
         type: DataTypes.STRING,
-        allowNull: true, // Akan diisi oleh Admin jika user me-request custom background
+        allowNull: true,
     },
     badges: {
         type: DataTypes.JSON,
-        defaultValue: [], // Array berisi ID Lencana (Donatur/Event) yang diberikan Admin
+        defaultValue: [],
     },
     achievements: {
         type: DataTypes.JSON,
-        defaultValue: [], // Array berisi semua achievement yang sudah di-unlock
+        defaultValue: [],
     },
     displayedAchievements: {
         type: DataTypes.JSON,
-        defaultValue: [], // Array maksimal 3 achievement yang dipilih user untuk tampil di dropdown/kartu
-    }
+        defaultValue: [],
+    },
+    displayedBadges: {
+        type: DataTypes.JSON,
+        defaultValue: [], // Badge yang dipilih user untuk tampil di Canvas
+    },
 }, {
     tableName: 'user_profiles',
     timestamps: true,

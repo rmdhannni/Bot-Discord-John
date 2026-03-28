@@ -74,6 +74,8 @@ class BotClient extends Client {
             require('../models/Achievement');
             require('../models/CommandPermission');
             require('../models/LevelReward');
+            require('../models/Mission');
+            require('../models/UserProgress');
             
             await sequelize.sync({ alter: true });
             console.log('[DATABASE] Semua tabel telah disinkronkan.');

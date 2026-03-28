@@ -21,8 +21,16 @@ const Badge = sequelize.define('Badge', {
     imageUrl: {
         type: DataTypes.STRING,
         allowNull: false, // URL gambar asli, sangat berguna untuk di-render di Canvas (Kartu Nama) nanti
+    },
+    isClaimable: { 
+        type: DataTypes.BOOLEAN, 
+        defaultValue: false // Apakah user bisa claim sendiri?
+    },
+    claimDeadline: { 
+        type: DataTypes.DATE, 
+        allowNull: true // Batas waktu claim (jika null = permanen)
     }
-}, {
+},  {
     tableName: 'badges',
     timestamps: false,
 });

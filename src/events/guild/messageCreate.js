@@ -1,10 +1,13 @@
 const UserProfile = require('../../models/UserProfile');
 const LevelReward = require('../../models/LevelReward');
+const Mission = require('../../models/Mission');
+const UserProgress = require('../../models/UserProgress');
 const { EmbedBuilder } = require('discord.js');
+const { Op } = require('sequelize');
 
-// Menggunakan Set di memori RAM untuk mencatat user yang sedang cooldown (Clean Code & Cepat)
+// Set memori untuk Anti-Spam (Cooldown XP)
 const cooldownSet = new Set();
-const COOLDOWN_TIME = 60000; // 60 detik (1 menit) jarak antar pesan yang dapat XP
+const COOLDOWN_TIME = 60000; // 60 detik
 
 module.exports = {
     name: 'messageCreate',
@@ -16,71 +19,148 @@ module.exports = {
 
         const userId = message.author.id;
         const guildId = message.guild.id;
-        const cooldownKey = `${guildId}-${userId}`;
 
+        // ==========================================================
+        // 🚀 BAGIAN 1: TRACKER MISI CHAT (DI LUAR COOLDOWN XP)
+        // Setiap pesan akan dihitung untuk Misi, tanpa peduli spam atau tidak
+        // ==========================================================
+        try {
+            const now = new Date();
+            // Cari misi tipe 'chat' yang aktif dan belum kadaluarsa
+            const activeChatMissions = await Mission.findAll({
+                where: { guildId, isActive: true, type: 'chat', deadline: { [Op.gt]: now } }
+            });
+
+            for (const mission of activeChatMissions) {
+                let [progressData] = await UserProgress.findOrCreate({
+                    where: { guildId, userId, missionId: mission.id }
+                });
+
+                // Jika misi belum selesai, tambahkan progresnya
+                if (!progressData.isCompleted) {
+                    progressData.progress += 1;
+                    
+                    // CEK APAKAH TARGET TERCAPAI DI PESAN INI
+                    if (progressData.progress >= mission.target) {
+                        progressData.isCompleted = true;
+                        progressData.progress = mission.target; // Kunci di angka maksimal
+
+                        let rewardMsg = '';
+                        // Buka profil user untuk memberikan hadiah
+                        let [profile] = await UserProfile.findOrCreate({ where: { guildId, userId } });
+
+                        // --- LOGIKA PEMBAGIAN HADIAH MISI ---
+                        if (mission.rewardType === 'xp') {
+                            const xpReward = parseInt(mission.rewardValue);
+                            profile.xp += xpReward;
+                            await profile.save();
+                            rewardMsg = `**${xpReward} XP**`;
+                        } 
+                        else if (mission.rewardType === 'role') {
+                            const roleId = mission.rewardValue.replace(/\D/g, ''); // Ambil angka ID-nya saja
+                            const role = message.guild.roles.cache.get(roleId);
+                            if (role) {
+                                await message.member.roles.add(role).catch(() => {});
+                                rewardMsg = `Role **${role.name}**`;
+                            } else {
+                                rewardMsg = `Role tidak ditemukan di server`;
+                            }
+                        } 
+                        else if (mission.rewardType === 'badge') {
+                            let currentBadges = profile.badges || [];
+                            const badgeId = parseInt(mission.rewardValue);
+                            if (!currentBadges.includes(badgeId)) {
+                                currentBadges.push(badgeId);
+                                profile.badges = currentBadges;
+                                profile.changed('badges', true);
+                                await profile.save();
+                            }
+                            rewardMsg = `**Badge Eksklusif** (ID: ${badgeId})`;
+                        }
+
+                        // Kirim Pengumuman Misi Selesai ke Channel
+                        const embed = new EmbedBuilder()
+                            .setColor('#2ECC71')
+                            .setTitle('🎊 MISI SELESAI!')
+                            .setDescription(`Selamat ${message.author}! Kamu berhasil menyelesaikan misi **${mission.title}**!\n\n🎁 **Hadiahmu:** ${rewardMsg}`);
+                        
+                        await message.channel.send({ content: `${message.author}`, embeds: [embed] });
+                    }
+                    // Simpan progres terbaru ke database
+                    await progressData.save();
+                }
+            }
+        } catch (error) {
+            console.error('[ERROR] Gagal memproses Misi Chat:', error);
+        }
+
+        // ==========================================================
+        // ⭐ BAGIAN 2: SISTEM LEVELING & XP (DENGAN COOLDOWN)
+        // Mencegah user spam huruf acak untuk cepat naik level
+        // ==========================================================
+        const cooldownKey = `${guildId}-${userId}`;
+        
         // Jika user masih dalam masa cooldown, abaikan penambahan XP
         if (cooldownSet.has(cooldownKey)) return;
 
         try {
-            // 1. Cari profil user di database, buat baru jika belum pernah chat
+            // Cari profil user di database
             let [profile] = await UserProfile.findOrCreate({
                 where: { userId, guildId }
             });
 
-            // 2. Tambahkan XP secara acak antara 15 sampai 25 per pesan
+            // Tambahkan XP acak (15 sampai 25)
             const xpAdded = Math.floor(Math.random() * 11) + 15;
             profile.xp += xpAdded;
 
-            // 3. Sistem Kalkulasi Level (Rumus standar: XP Butuh = Level Saat Ini ^ 2 * 100)
-            // Contoh: Naik ke Lvl 2 butuh 100 XP, Lvl 3 butuh 400 XP, Lvl 4 butuh 900 XP
+            // Kalkulasi kebutuhan XP untuk naik level
             const nextLevelXp = Math.pow(profile.level, 2) * 100;
-
             let isLevelUp = false;
+
             if (profile.xp >= nextLevelXp) {
                 profile.level += 1;
                 isLevelUp = true;
             }
 
-            // Simpan perubahan ke MySQL
+            // Simpan perubahan XP & Level ke database
             await profile.save();
 
-            // 4. Masukkan user ke daftar Cooldown
+            // Masukkan user ke daftar Cooldown
             cooldownSet.add(cooldownKey);
             setTimeout(() => {
-                cooldownSet.delete(cooldownKey); // Hapus dari cooldown setelah 1 menit
+                cooldownSet.delete(cooldownKey); // Hapus cooldown setelah 1 menit
             }, COOLDOWN_TIME);
 
-            // 5. Kirim pengumuman jika user naik level
+            // ==========================================================
+            // 🎁 BAGIAN 3: PENGUMUMAN NAIK LEVEL & ROLE REWARD
+            // ==========================================================
             if (isLevelUp) {
-                let rewardText = ''; // Teks tambahan jika dapat role
-
-                // Cek apakah ada hadiah di level baru ini
+                let rewardText = ''; 
+                
+                // Cek apakah ada hadiah Role di level baru ini
                 const rewardData = await LevelReward.findOne({ 
                     where: { guildId: guildId, level: profile.level } 
                 });
 
                 if (rewardData) {
                     const roleToGive = message.guild.roles.cache.get(rewardData.roleId);
-                    // Pastikan rolenya masih ada di server (tidak dihapus manual oleh admin)
                     if (roleToGive) {
                         try {
                             await message.member.roles.add(roleToGive);
                             rewardText = `\n🎁 Dan kamu berhak mendapatkan role **${roleToGive.name}**!`;
                         } catch (err) {
-                            console.error(`[WARN] Bot tidak punya izin untuk memberikan role di guild ${guildId}`);
+                            console.error(`[WARN] Bot posisi rolenya di bawah, tidak bisa memberikan role di guild ${guildId}`);
                         }
                     }
                 }
 
+                // Kirim ucapan selamat naik level
                 const embed = new EmbedBuilder()
                     .setColor('#F1C40F')
                     .setDescription(`🎉 Selamat <@${userId}>! Kamu baru saja mencapai **Level ${profile.level}**!${rewardText}`);
                 
                 await message.channel.send({ embeds: [embed] });
             }
-
-            // (Opsional) Di sinilah nanti logika pemeriksaan pencapaian (Achievement) dimasukkan.
-            // Contoh: Jika user mengirim pesan ke-1000, berikan Achievement "Chatterbox".
 
         } catch (error) {
             console.error(`[ERROR] Gagal memproses XP Message untuk user ${userId}:`, error);
