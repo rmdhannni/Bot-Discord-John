@@ -15,7 +15,26 @@ module.exports = {
 
         try {
             // ==========================================================
-            // 🛡️ GATEKEEPER: CEK CUSTOM PERMISSION DARI DATABASE
+            // 🛡️ GATEKEEPER 1: CEK PERMISSION DISCORD DARI COMMAND DEFINITION
+            // ==========================================================
+            // Jika command mendeklarasikan permissions (misal: Administrator),
+            // pastikan user memiliki semua permission tersebut.
+            if (command.permissions && command.permissions.length > 0) {
+                const missingPerms = command.permissions.filter(perm => 
+                    !interaction.member.permissions.has(perm)
+                );
+
+                if (missingPerms.length > 0) {
+                    return interaction.reply({
+                        content: `🚫 **Akses Ditolak!** Command \`/${interaction.commandName}\` hanya bisa digunakan oleh **Admin** server.`,
+                        ephemeral: true
+                    });
+                }
+            }
+            // ==========================================================
+
+            // ==========================================================
+            // 🛡️ GATEKEEPER 2: CEK CUSTOM PERMISSION DARI DATABASE
             // ==========================================================
             // Abaikan pengecekan jika user adalah Administrator (Admin bebas pakai apa saja)
             if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {

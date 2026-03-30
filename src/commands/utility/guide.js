@@ -24,7 +24,7 @@ class GuideCommand extends BaseCommand {
             .addOptions(
                 new StringSelectMenuOptionBuilder()
                     .setLabel('🔰 Panduan Admin & Setup')
-                    .setDescription('Cara mengatur bot, welcome, dan permission')
+                    .setDescription('Cara mengatur bot, welcome, misi, dan permission')
                     .setValue('admin')
                     .setEmoji('⚙️'),
                 new StringSelectMenuOptionBuilder()
@@ -33,8 +33,8 @@ class GuideCommand extends BaseCommand {
                     .setValue('booster')
                     .setEmoji('💎'),
                 new StringSelectMenuOptionBuilder()
-                    .setLabel('🎮 Panduan RPG & Sosial')
-                    .setDescription('Sistem Level, Profile, dan Achievement')
+                    .setLabel('🎮 Panduan RPG, Badge & Misi')
+                    .setDescription('Sistem Level, Profile, Badge, dan Quest')
                     .setValue('rpg')
                     .setEmoji('🏅'),
                 new StringSelectMenuOptionBuilder()
@@ -48,15 +48,14 @@ class GuideCommand extends BaseCommand {
 
         // 2. Embed Halaman Utama (Welcome Page)
         const mainEmbed = new EmbedBuilder()
-            .setColor('#95A5A6')
+            .setColor('#2B2D31')
             .setTitle('📚 Buku Panduan Bot')
-            .setDescription('Selamat datang di pusat bantuan! Bot ini dilengkapi dengan berbagai fitur canggih mulai dari sistem manajemen Server, Leveling, hingga fitur Premium khusus donatur.\n\n👇 **Silakan pilih kategori panduan dari menu di bawah ini.**')
+            .setDescription('Selamat datang di pusat bantuan! Bot ini dilengkapi dengan ekosistem MMORPG yang canggih, mulai dari sistem manajemen Server, Leveling, Ekonomi Badge, hingga fitur Premium khusus donatur.\n\n👇 **Silakan pilih kategori panduan dari menu di bawah ini.**')
             .setFooter({ text: 'Gunakan dropdown untuk bernavigasi' });
 
         const response = await interaction.reply({ 
             embeds: [mainEmbed], 
             components: [row] 
-            // Hapus 'ephemeral: true' jika Anda ingin guide ini bisa dibaca bareng-bareng di chat
         });
 
         // 3. Event Collector untuk Navigasi Menu
@@ -72,7 +71,7 @@ class GuideCommand extends BaseCommand {
             }
 
             const selected = i.values[0];
-            let newEmbed = new EmbedBuilder().setColor('#95A5A6');
+            let newEmbed = new EmbedBuilder().setColor('#3498DB');
 
             // ================= KONTEN PANDUAN =================
 
@@ -80,12 +79,11 @@ class GuideCommand extends BaseCommand {
                 newEmbed.setTitle('⚙️ Panduan Admin & Setup')
                     .setDescription('Kumpulan command khusus Administrator Server.')
                     .addFields(
-                        { name: '`/setup welcome` & `/setup booster`', value: 'Mengatur channel ucapan selamat datang dan role Booster utama.' },
-                        { name: '`/setup_snipe`', value: 'Mengatur role apa saja yang diizinkan mengintip pesan yang dihapus.' },
-                        { name: '`/setup_rewards`', value: 'Membuat otomatisasi hadiah Role ketika user mencapai level tertentu (contoh: Level 10 dapat role VIP).' },
-                        { name: '`/permission`', value: 'Sistem pengunci command. Bisa digunakan untuk melarang/mengizinkan role tertentu memakai command tertentu.' },
-                        { name: '`/achievements_admin`', value: 'Membuat master data *Achievement* dan membagikannya ke member secara manual.' },
-                        { name: '`/badge` & `/background`', value: 'Membuat lencana custom dari gambar, dan memasangkan *background* custom ke kartu nama member.' }
+                        { name: '🛠️ Core Setup', value: '`/setup` (Set Welcome & Booster Role), `/setup_snipe` (Set Role Snipe), `/permission` (Kunci command untuk role tertentu).' },
+                        { name: '🎁 Level Rewards', value: '`/setup_rewards` (Otomatis memberikan Role saat user mencapai Level tertentu).' },
+                        { name: '🎖️ Master Badge & Background', value: '`/badge` (Buat badge permanen/limited time dan bagikan ke user), `/background` (Pasang custom background ke profil user).' },
+                        { name: '🏆 Master Achievements', value: '`/achievements_admin` (Buat master piala dan bagikan ke user).' },
+                        { name: '📜 Mission Control', value: '`/mission_admin` (Buat quest berbatas waktu dengan hadiah XP/Role/Badge untuk chat dan voice channel).' }
                     );
             } 
             else if (selected === 'booster') {
@@ -99,12 +97,15 @@ class GuideCommand extends BaseCommand {
                     );
             }
             else if (selected === 'rpg') {
-                newEmbed.setTitle('🏅 Panduan RPG & Sosial')
-                    .setDescription('Fitur interaktif untuk member server.')
+                newEmbed.setTitle('🎮 Panduan RPG, Badge & Misi')
+                    .setDescription('Fitur interaktif dan ekonomi sosial untuk member server.')
                     .addFields(
-                        { name: '💬 Cara Mendapatkan XP', value: 'Cukup aktif mengobrol di text channel! Kamu akan mendapat XP setiap 1 menit. Dilarang spam!' },
-                        { name: '`/profile`', value: 'Menampilkan Kartu Nama (Profile Card) keren yang berisi Foto, Bar EXP, Level, Lencana Donatur, dan Pencapaianmu.' },
-                        { name: '`/achievements`', value: 'Membuka lemari piala. Kamu bisa memilih maksimal 3 Achievement untuk dipajang di kartu namamu (menggunakan dropdown menu).' }
+                        { name: '💬 Cara Naik Level', value: 'Aktif mengobrol di text channel! Kamu akan mendapat XP setiap 1 menit (Anti-Spam System).' },
+                        { name: '`/profile`', value: 'Menampilkan Kartu Nama (Profile Card) keren yang berisi Foto, Bar EXP, Level, Lencana, dan Pencapaianmu.' },
+                        { name: '`/missions`', value: 'Membuka Papan Quest. Cek misi aktif (Chat/Voice) dan dapatkan hadiahnya secara otomatis sebelum waktu habis!' },
+                        { name: '`/claim`', value: 'Klaim Badge Limited Edition (Event Terbatas) sebelum masa tenggatnya habis.' },
+                        { name: '`/giftbadge`', value: 'Transfer/berikan badge milikmu kepada user lain secara cuma-cuma.' },
+                        { name: '`/mybadges` & `/achievements`', value: 'Atur badge dan achievement mana saja yang ingin kamu pamerkan di Profil Card-mu (Maks 8 Badge, Maks 3 Achievement).' }
                     );
             }
             else if (selected === 'utility') {
@@ -112,8 +113,7 @@ class GuideCommand extends BaseCommand {
                     .setDescription('Fitur utilitas sehari-hari.')
                     .addFields(
                         { name: '`/snipe`', value: 'Membaca pesan terakhir yang baru saja dihapus oleh seseorang di channel tersebut (Butuh akses khusus dari Admin).' },
-                        { name: '`/ping`', value: 'Mengecek kecepatan respon bot.' },
-                        { name: '`/stats`', value: 'Melihat status server bot, penggunaan RAM, dan statistik member.' }
+                        { name: '`/ping`', value: 'Mengecek kecepatan respon dan latensi bot ke server Discord.' }
                     );
             }
 

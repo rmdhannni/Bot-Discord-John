@@ -1,14 +1,16 @@
 const BaseCommand = require('../../structures/BaseCommand');
 const Badge = require('../../models/Badge');
 const UserProfile = require('../../models/UserProfile');
-const { 
-    EmbedBuilder, 
-    PermissionFlagsBits, 
-    ActionRowBuilder, 
-    StringSelectMenuBuilder, 
-    StringSelectMenuOptionBuilder, 
-    ComponentType 
+const {
+    EmbedBuilder,
+    PermissionFlagsBits,
+    ActionRowBuilder,
+    StringSelectMenuBuilder,
+    StringSelectMenuOptionBuilder,
+    ComponentType
 } = require('discord.js');
+const fs = require('fs');
+const path = require('path');
 
 class BadgeCommand extends BaseCommand {
     constructor(client) {
@@ -35,7 +37,6 @@ class BadgeCommand extends BaseCommand {
                     type: 1, // SUB_COMMAND
                     options: [
                         { name: 'user', description: 'Pilih user yang diberi badge', type: 6, required: true }
-                        // 📍 KITA HAPUS OPSI KETIK MANUAL DI SINI
                     ]
                 }
             ]
@@ -51,16 +52,13 @@ class BadgeCommand extends BaseCommand {
             if (subCommand === 'create') {
                 const badgeName = interaction.options.getString('nama').replace(/\s+/g, '_');
                 const attachment = interaction.options.getAttachment('gambar');
-                const isClaimable = interaction.options.getBoolean('claimable') || false; 
-                const durasiJam = interaction.options.getInteger('durasi_jam'); 
+                const isClaimable = interaction.options.getBoolean('claimable') || false;
+                const durasiJam = interaction.options.getInteger('durasi_jam');
 
-                await interaction.deferReply(); 
+                await interaction.deferReply();
 
                 if (!attachment.contentType.startsWith('image/')) {
                     return interaction.editReply({ content: '❌ File yang diunggah harus berupa gambar!' });
-                }
-                if (attachment.size > (1 * 1024 * 1024)) {
-                    return interaction.editReply({ content: `❌ Ukuran gambar terlalu besar! Maksimal 1 MB.` });
                 }
 
                 const existingBadge = await Badge.findOne({ where: { guildId: guild.id, name: badgeName } });
@@ -68,36 +66,49 @@ class BadgeCommand extends BaseCommand {
                     return interaction.editReply({ content: `❌ Badge dengan nama **${badgeName}** sudah ada!` });
                 }
 
+                // --- Download & simpan file lokal ---
+                const uploadDir = path.join(__dirname, '../../../assets/badges');
+                if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
+
+                const response = await fetch(attachment.url);
+                const arrayBuffer = await response.arrayBuffer();
+                const buffer = Buffer.from(arrayBuffer);
+                const fileName = `badge_${badgeName}_${Date.now()}.png`;
+                const filePath = path.join(uploadDir, fileName);
+                fs.writeFileSync(filePath, buffer);
+                console.log(`[BADGE CREATE] File disimpan: ${filePath}`);
+                // ------------------------------------
+
                 let claimDeadline = null;
-                let infoWaktu = 'Permanen (Selalu bisa diklaim jika claimable=True)';
-                
+                let infoWaktu = 'Permanen';
                 if (isClaimable && durasiJam) {
                     claimDeadline = new Date();
-                    claimDeadline.setHours(claimDeadline.getHours() + durasiJam); 
+                    claimDeadline.setHours(claimDeadline.getHours() + durasiJam);
                     infoWaktu = `Terbatas! Berakhir pada <t:${Math.floor(claimDeadline.getTime() / 1000)}:F>`;
-                } else if (!isClaimable) {
-                    infoWaktu = 'Eksklusif (Hanya bisa diberikan oleh Admin via /badge give)';
                 }
 
                 const createdEmoji = await guild.emojis.create({
                     attachment: attachment.url,
                     name: badgeName
-                });
+                }).catch(() => null);
+
+                const emojiId = createdEmoji ? createdEmoji.id : 'default';
+                const emojiFormat = createdEmoji ? createdEmoji.toString() : '🏅';
 
                 await Badge.create({
                     guildId: guild.id,
                     name: badgeName,
-                    emojiId: createdEmoji.id,
-                    emojiFormat: createdEmoji.toString(), 
-                    imageUrl: attachment.url,
+                    emojiId: emojiId,
+                    emojiFormat: emojiFormat,
+                    imageUrl: fileName, // simpan nama file lokal, BUKAN URL Discord
                     isClaimable: isClaimable,
                     claimDeadline: claimDeadline
                 });
 
                 const embed = new EmbedBuilder()
-                    .setColor('#95A5A6')
-                    .setTitle('🎖️ Badge Limited Edition Berhasil Dibuat!')
-                    .setDescription(`Gambar telah diconvert menjadi Emote Discord dan disimpan ke Database.\n\n**Preview:** ${createdEmoji.toString()}\n**Nama:** \`${badgeName}\`\n**Status:** ${infoWaktu}`)
+                    .setColor('#2ECC71')
+                    .setTitle('🎖️ Badge Berhasil Dibuat!')
+                    .setDescription(`**Preview:** ${emojiFormat}\n**Nama:** \`${badgeName}\`\n**Status:** ${infoWaktu}\n**File:** \`${fileName}\``)
                     .setThumbnail(attachment.url);
 
                 return interaction.editReply({ embeds: [embed] });
@@ -133,16 +144,16 @@ class BadgeCommand extends BaseCommand {
                 const row = new ActionRowBuilder().addComponents(selectMenu);
 
                 // Kirim menu hanya ke Admin (Ephemeral)
-                const response = await interaction.reply({ 
-                    content: `Pilih badge yang ingin diberikan kepada ${targetUser}:`, 
-                    components: [row], 
-                    ephemeral: true 
+                const response = await interaction.reply({
+                    content: `Pilih badge yang ingin diberikan kepada ${targetUser}:`,
+                    components: [row],
+                    ephemeral: true
                 });
 
                 // 4. Tangkap pilihan Admin
-                const collector = response.createMessageComponentCollector({ 
-                    componentType: ComponentType.StringSelect, 
-                    time: 60000 
+                const collector = response.createMessageComponentCollector({
+                    componentType: ComponentType.StringSelect,
+                    time: 60000
                 });
 
                 collector.on('collect', async (i) => {
@@ -193,7 +204,7 @@ class BadgeCommand extends BaseCommand {
 
                 collector.on('end', (collected, reason) => {
                     if (reason === 'time') {
-                        interaction.editReply({ content: 'Waktu pemilihan habis. Silakan ulangi command.', components: [] }).catch(() => {});
+                        interaction.editReply({ content: 'Waktu pemilihan habis. Silakan ulangi command.', components: [] }).catch(() => { });
                     }
                 });
             }

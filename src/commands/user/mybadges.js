@@ -22,7 +22,18 @@ class MyBadgesCommand extends BaseCommand {
             const displayedBadgeIds = profile.displayedBadges || [];
 
             if (ownedBadgeIds.length === 0) {
-                return interaction.reply({ content: '❌ Kamu belum memiliki badge satupun.', ephemeral: true });
+                const noBadgeEmbed = new EmbedBuilder()
+                    .setColor('#5865F2')
+                    .setTitle('🎖️ Kamu Belum Punya Badge')
+                    .setDescription(
+                        'Kamu belum memiliki badge satupun saat ini.\n\n' +
+                        '**Bagaimana cara mendapatkan badge?**\n' +
+                        '> • Ikuti event atau giveaway di server\n' +
+                        '> • Menjadi donatur server\n' +
+                        '> • Badge diberikan langsung oleh Admin'
+                    )
+                    .setFooter({ text: 'Badge kamu akan muncul di sini setelah diterima.' });
+                return interaction.reply({ embeds: [noBadgeEmbed], ephemeral: true });
             }
 
             const ownedBadges = await Badge.findAll({ where: { id: ownedBadgeIds } });
@@ -58,7 +69,11 @@ class MyBadgesCommand extends BaseCommand {
                 profile.changed('displayedBadges', true);
                 await profile.save();
 
-                await i.update({ content: `✅ Berhasil memasang **${i.values.length}** badge ke profilmu!`, components: [] });
+                if (i.values.length === 0) {
+                    await i.update({ content: '✅ Semua badge berhasil dilepas dari profilmu.', components: [] });
+                } else {
+                    await i.update({ content: `✅ Berhasil memasang **${i.values.length}** badge ke profilmu!`, components: [] });
+                }
             });
 
         } catch (error) {

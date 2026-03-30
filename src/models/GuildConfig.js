@@ -34,7 +34,11 @@ const GuildConfig = sequelize.define('GuildConfig', {
     leaveMessage: {
     type: DataTypes.TEXT,
     allowNull: true,
-    }
+    },
+    defaultBackground: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
 }, {
     tableName: 'guild_configs',
     timestamps: true, // Otomatis membuat kolom createdAt & updatedAt
