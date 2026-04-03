@@ -51,8 +51,8 @@ class PremiumCommand extends BaseCommand {
                 // await userDB.save();
 
                 embed.setColor('#95A5A6') // Emas Premium
-                     .setTitle('🌟 Status Premium Diaktifkan!')
-                     .setDescription(`User ${targetUser} sekarang memiliki akses ke semua fitur Premium bot!`);
+                     .setTitle('🌟 Status Penduduk Bintang Lima Diaktifkan!')
+                     .setDescription(`Warga ${targetUser} sekarang mendapat perlindungan Wayne Enterprises dan akses fitur Premium bot!`);
             } 
             
             else if (subCommand === 'remove') {
@@ -61,8 +61,8 @@ class PremiumCommand extends BaseCommand {
                 // await userDB.save();
 
                 embed.setColor('#95A5A6') // Abu-abu
-                     .setTitle('🔒 Status Premium Dicabut')
-                     .setDescription(`Akses fitur Premium untuk ${targetUser} telah dihentikan.`);
+                     .setTitle('🔒 Sokongan Dana Dihentikan')
+                     .setDescription(`Akses keutamaan Premium Gotham untuk ${targetUser} telah ditutup.`);
             }
 
             await interaction.reply({ embeds: [embed] });

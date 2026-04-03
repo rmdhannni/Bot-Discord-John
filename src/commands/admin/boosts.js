@@ -54,8 +54,8 @@ class BoostsCommand extends BaseCommand {
                 await boosterData.save();
 
                 embed.setColor('#95A5A6')
-                     .setTitle('📈 Boost Berhasil Ditambahkan!')
-                     .setDescription(`Ditambahkan **${jumlah} boost** kepada ${targetUser}.\nTotal catatan boost mereka sekarang: **${boosterData.boostCount}**`);
+                     .setTitle('📈 Kontribusi Pembangunan (Boost) Ditambahkan!')
+                     .setDescription(`Dikucurkan dana setara **${jumlah} boost** kepada ${targetUser}.\nCatatan partisipasi pembangunannya sekarang: **${boosterData.boostCount}**`);
             } 
             
             else if (subCommand === 'remove') {
@@ -64,8 +64,8 @@ class BoostsCommand extends BaseCommand {
                 await boosterData.save();
 
                 embed.setColor('#95A5A6')
-                     .setTitle('📉 Boost Berhasil Dikurangi!')
-                     .setDescription(`Dikurangi **${jumlah} boost** dari ${targetUser}.\nTotal catatan boost mereka sekarang: **${boosterData.boostCount}**`);
+                     .setTitle('📉 Catatan Pembangunan Dikurangi!')
+                     .setDescription(`Dipangkas **${jumlah} boost** dari rekam jejak ${targetUser}.\nCatatan partisipasi pembangunannya sekarang: **${boosterData.boostCount}**`);
             }
 
             await interaction.reply({ embeds: [embed] });

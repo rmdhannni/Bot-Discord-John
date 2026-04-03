@@ -106,9 +106,9 @@ class BadgeCommand extends BaseCommand {
                 });
 
                 const embed = new EmbedBuilder()
-                    .setColor('#2ECC71')
-                    .setTitle('🎖️ Badge Berhasil Dibuat!')
-                    .setDescription(`**Preview:** ${emojiFormat}\n**Nama:** \`${badgeName}\`\n**Status:** ${infoWaktu}\n**File:** \`${fileName}\``)
+                    .setColor('#95A5A6')
+                    .setTitle('🦇 Lencana Kehormatan Ditempa!')
+                    .setDescription(`**Pratinjau:** ${emojiFormat}\n**Kode Lencana:** \`${badgeName}\`\n**Status:** ${infoWaktu}\n**Arsip Berkas:** \`${fileName}\``)
                     .setThumbnail(attachment.url);
 
                 return interaction.editReply({ embeds: [embed] });
@@ -196,8 +196,8 @@ class BadgeCommand extends BaseCommand {
                     // 5. Kirim Pengumuman Publik ke Channel
                     const successEmbed = new EmbedBuilder()
                         .setColor('#95A5A6')
-                        .setTitle('🎁 Badges Diberikan!')
-                        .setDescription(`Selamat! ${targetUser} telah menerima **${addedCount} badge eksklusif** dari Admin:\n\n${addedNames.join('\n')}`);
+                        .setTitle('🎁 Lencana Didistribusikan!')
+                        .setDescription(`Pengumuman! ${targetUser} telah menerima **${addedCount} lencana eksklusif** dari Komisaris GCPD:\n\n${addedNames.join('\n')}`);
 
                     await interaction.channel.send({ content: `${targetUser}`, embeds: [successEmbed] });
                 });

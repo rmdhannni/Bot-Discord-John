@@ -75,9 +75,9 @@ class BackgroundCommand extends BaseCommand {
                 await config.save();
 
                 const embed = new EmbedBuilder()
-                    .setColor('#2ECC71')
-                    .setTitle('🖼️ Default Background Berhasil Diatur!')
-                    .setDescription(`Gambar berhasil diunduh dan disimpan secara permanen sebagai background default untuk server **${interaction.guild.name}**.`)
+                    .setColor('#95A5A6')
+                    .setTitle('🦇 Lanskap Kota Diperbarui!')
+                    .setDescription(`Pemandangan kota utama (default background) sukses diatur untuk **${interaction.guild.name}**.`)
                     .setImage(attachment.url); // Menampilkan preview saja
 
                 return interaction.editReply({ embeds: [embed] });
@@ -96,9 +96,9 @@ class BackgroundCommand extends BaseCommand {
                 await profile.save();
 
                 const embed = new EmbedBuilder()
-                    .setColor('#3498DB')
-                    .setTitle('🖼️ Background User Berhasil Diatur!')
-                    .setDescription(`Gambar berhasil diunduh dan dipasang sebagai background personal untuk ${targetUser}.`)
+                    .setColor('#95A5A6')
+                    .setTitle('🦇 Identitas Visual Warga Diperbarui!')
+                    .setDescription(`Latar belakang tanda pengenal jalanan telah diubah khusus untuk ${targetUser}.`)
                     .setImage(attachment.url); // Menampilkan preview saja
 
                 return interaction.editReply({ embeds: [embed] });

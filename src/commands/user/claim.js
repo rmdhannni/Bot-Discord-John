@@ -52,8 +52,8 @@ class ClaimCommand extends BaseCommand {
 
             const embed = new EmbedBuilder()
                 .setColor('#95A5A6')
-                .setTitle('🎉 KLAIM BERHASIL!')
-                .setDescription(`Selamat! Kamu berhasil mengamankan badge limited edition: ${badge.emojiFormat} **${badge.name}**.`);
+                .setTitle('🦇 PASOKAN GELAP DIAMANKAN!')
+                .setDescription(`Kerja bagus! Kamu berhasil merazia lencana langka Gotham: ${badge.emojiFormat} **${badge.name}**.`);
 
             return interaction.reply({ embeds: [embed] });
 

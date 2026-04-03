@@ -31,7 +31,7 @@ class MissionsCommand extends BaseCommand {
             });
 
             if (activeMissions.length === 0) {
-                return interaction.editReply({ content: '🏜️ Saat ini tidak ada misi yang tersedia. Tunggu Admin membuat misi baru!' });
+                return interaction.editReply({ content: 'Saat Ini Tidak Ada Misi Aktif Yang Tersedia. Tetap aktif di Gotham Untuk Misi - Misi Yang Baru! :bat:!' });
             }
 
             // 2. Ambil progres user untuk misi-misi tersebut
@@ -42,8 +42,8 @@ class MissionsCommand extends BaseCommand {
 
             const embed = new EmbedBuilder()
                 .setColor('#95A5A6')
-                .setTitle('📜 Papan Misi (Quest Board)')
-                .setDescription('Selesaikan misi di bawah ini sebelum waktunya habis untuk mendapatkan hadiah menarik!');
+                .setTitle('🚨 Papan Buronan GCPD (Misi)')
+                .setDescription('Selesaikan target operasi di bawah ini sebelum fajar menyingsing untuk mendapatkan reputasi mentereng di Gotham!');
 
             // 3. Render teks progres untuk setiap misi
             for (const mission of activeMissions) {

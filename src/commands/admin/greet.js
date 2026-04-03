@@ -60,8 +60,8 @@ class GreetCommand extends BaseCommand {
                 config.welcomeMessage = pesanBaru;
                 await config.save();
 
-                embed.setTitle('🎉 Pesan Welcome Diperbarui!')
-                     .setDescription(`**Preview teks mentah:**\n\`\`\`\n${pesanBaru}\n\`\`\``)
+                embed.setTitle('🦇 Instruksi Sambutan Warga Baru Diterima!')
+                     .setDescription(`**Transkrip Mentah Sambutan:**\n\`\`\`\n${pesanBaru}\n\`\`\``)
                      .addFields({ 
                          name: 'Tips Variabel', 
                          value: 'Pesan ini akan diformat otomatis saat ada yang bergabung.' 
@@ -73,8 +73,8 @@ class GreetCommand extends BaseCommand {
                 config.leaveMessage = pesanBaru;
                 await config.save();
 
-                embed.setTitle('👋 Pesan Goodbye Diperbarui!')
-                     .setDescription(`**Preview teks mentah:**\n\`\`\`\n${pesanBaru}\n\`\`\``);
+                embed.setTitle('👋 Laporan Kehilangan Tersimpan!')
+                     .setDescription(`**Transkrip Mentah Perpisahan:**\n\`\`\`\n${pesanBaru}\n\`\`\``);
             }
 
             // Balas interaksi agar Admin tahu proses berhasil

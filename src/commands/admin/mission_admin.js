@@ -100,9 +100,9 @@ class MissionAdminCommand extends BaseCommand {
 
                 const embed = new EmbedBuilder()
                     .setColor('#95A5A6')
-                    .setTitle('📜 Misi Baru Tersedia!')
-                    .setDescription(`Admin baru saja membuat misi berbatas waktu. Ayo selesaikan!\n\n**${title}**\n*${description}*\n\n🎯 **Tugas:** ${typeText}\n🎁 **Hadiah:** ${rewardText}\n⏳ **Berakhir Pada:** <t:${Math.floor(deadline.getTime() / 1000)}:F>`)
-                    .setFooter({ text: 'Ketik /missions untuk melacak progresmu' });
+                    .setTitle('📜 Bounty Baru Meluncur di Papan GCPD!')
+                    .setDescription(`Komisaris baru saja merilis Target Operasi. Siap laksanakan!\n\n**${title}**\n*${description}*\n\n🎯 **Misi:** ${typeText}\n🎁 **Bayaran:** ${rewardText}\n⏳ **Target Waktu:** <t:${Math.floor(deadline.getTime() / 1000)}:F>`)
+                    .setFooter({ text: 'Akses /missions dari terminalmu' });
 
                 return interaction.reply({ embeds: [embed] });
             }
@@ -123,8 +123,8 @@ class MissionAdminCommand extends BaseCommand {
 
                 const embed = new EmbedBuilder()
                     .setColor('#95A5A6')
-                    .setTitle('📋 Daftar Misi Aktif')
-                    .setDescription(validMissions.map(m => `**${m.title}** (ID: ${m.id})\n⏳ Deadline: <t:${Math.floor(new Date(m.deadline).getTime() / 1000)}:R>`).join('\n\n'));
+                    .setTitle('📋 Arsip Target Operasi (Aktif)')
+                    .setDescription(validMissions.map(m => `**${m.title}** (Kode Lapangan: ${m.id})\n⏳ Batas Eliminasi: <t:${Math.floor(new Date(m.deadline).getTime() / 1000)}:R>`).join('\n\n'));
 
                 return interaction.reply({ embeds: [embed] });
             }

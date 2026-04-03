@@ -9,9 +9,9 @@ class WelcomeEmbedBuilder {
      */
     static buildWelcome(member, description) {
         return new EmbedBuilder()
-            .setColor('#2ECC71') // Warna hijau cerah khas Soya
+            .setColor('#95A5A6') // Warna abu-abu
             .setAuthor({ 
-                name: `Selamat Datang, ${member.user.username}! 👋`, 
+                name: `Selamat Datang di Gotham City, ${member.user.username}! 🦇`, 
                 iconURL: member.user.displayAvatarURL({ dynamic: true }) 
             })
             .setDescription(description)
@@ -19,7 +19,7 @@ class WelcomeEmbedBuilder {
             // Anda bisa memasukkan URL gambar default untuk banner di bawah ini jika mau
             // .setImage('https://link-gambar-banner-server.com/banner.png')
             .setFooter({ 
-                text: `Kamu adalah member ke-${member.guild.memberCount} di ${member.guild.name}`, 
+                text: `Kamu adalah warga Gotham ke-${member.guild.memberCount}!`, 
                 iconURL: member.guild.iconURL({ dynamic: true }) || null
             })
             .setTimestamp();
@@ -33,15 +33,15 @@ class WelcomeEmbedBuilder {
      */
     static buildGoodbye(member, description) {
         return new EmbedBuilder()
-            .setColor('#E74C3C') // Warna merah untuk Goodbye
+            .setColor('#95A5A6') // Warna abu-abu untuk Goodbye
             .setAuthor({ 
-                name: `Selamat Tinggal, ${member.user.username}... 🕊️`, 
+                name: `Sampai Jumpa di Jalanan Gotham, ${member.user.username}... 🌧️`, 
                 iconURL: member.user.displayAvatarURL({ dynamic: true }) 
             })
             .setDescription(description)
             .setThumbnail(member.user.displayAvatarURL({ dynamic: true, size: 512 }))
             .setFooter({ 
-                text: `Tersisa ${member.guild.memberCount} member di ${member.guild.name}`, 
+                text: `Tersisa ${member.guild.memberCount} warga di Arkham/Gotham`, 
                 iconURL: member.guild.iconURL({ dynamic: true }) || null
             })
             .setTimestamp();

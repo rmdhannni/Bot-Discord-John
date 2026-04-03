@@ -28,18 +28,18 @@ class GuideCommand extends BaseCommand {
                     .setValue('admin')
                     .setEmoji('⚙️'),
                 new StringSelectMenuOptionBuilder()
-                    .setLabel('💎 Panduan Booster (Premium)')
-                    .setDescription('Fitur khusus untuk donatur server')
+                    .setLabel('💎 Akses VIP (Premium)')
+                    .setDescription('Fitur khusus untuk donatur Elite Gotham')
                     .setValue('booster')
                     .setEmoji('💎'),
                 new StringSelectMenuOptionBuilder()
-                    .setLabel('🎮 Panduan RPG, Badge & Misi')
-                    .setDescription('Sistem Level, Profile, Badge, dan Quest')
+                    .setLabel('🎮 Operasi & Lencana (RPG)')
+                    .setDescription('Sistem Level, Profile, Badge, dan Operasi Misi')
                     .setValue('rpg')
                     .setEmoji('🏅'),
                 new StringSelectMenuOptionBuilder()
-                    .setLabel('🛠️ Panduan Utility')
-                    .setDescription('Fitur umum seperti Snipe dan Ping')
+                    .setLabel('🛠️ Utilitas Batcomputer')
+                    .setDescription('Fitur umum seperti Radar (Ping) dan Arsip Pesan (Snipe)')
                     .setValue('utility')
                     .setEmoji('🛠️')
             );
@@ -48,10 +48,10 @@ class GuideCommand extends BaseCommand {
 
         // 2. Embed Halaman Utama (Welcome Page)
         const mainEmbed = new EmbedBuilder()
-            .setColor('#2B2D31')
-            .setTitle('📚 Buku Panduan Bot')
-            .setDescription('Selamat datang di pusat bantuan! Bot ini dilengkapi dengan ekosistem MMORPG yang canggih, mulai dari sistem manajemen Server, Leveling, Ekonomi Badge, hingga fitur Premium khusus donatur.\n\n👇 **Silakan pilih kategori panduan dari menu di bawah ini.**')
-            .setFooter({ text: 'Gunakan dropdown untuk bernavigasi' });
+            .setColor('#95A5A6')
+            .setTitle('🦇 Arsip Database GCPD (Panduan Gotham)')
+            .setDescription('Selamat datang di pusat terminal informasi Gotham. Bot ini dilengkapi dengan ekosistem MMORPG yang canggih, mulai dari sistem manajemen Server, Leveling, Lencana Gotham, hingga fitur Elite khusus donatur.\n\n👇 **Silakan akses database melalui menu di bawah ini.**')
+            .setFooter({ text: 'Gunakan dropdown untuk mengakses terminal' });
 
         const response = await interaction.reply({ 
             embeds: [mainEmbed], 
@@ -71,49 +71,49 @@ class GuideCommand extends BaseCommand {
             }
 
             const selected = i.values[0];
-            let newEmbed = new EmbedBuilder().setColor('#3498DB');
+            let newEmbed = new EmbedBuilder().setColor('#95A5A6');
 
             // ================= KONTEN PANDUAN =================
 
             if (selected === 'admin') {
-                newEmbed.setTitle('⚙️ Panduan Admin & Setup')
-                    .setDescription('Kumpulan command khusus Administrator Server.')
+                newEmbed.setTitle('⚙️ Panduan Admin & Kepolisian Gotham')
+                    .setDescription('Kumpulan command khusus bagi Komisaris Server (Admin).')
                     .addFields(
-                        { name: '🛠️ Core Setup', value: '`/setup` (Set Welcome & Booster Role), `/setup_snipe` (Set Role Snipe), `/permission` (Kunci command untuk role tertentu).' },
-                        { name: '🎁 Level Rewards', value: '`/setup_rewards` (Otomatis memberikan Role saat user mencapai Level tertentu).' },
-                        { name: '🎖️ Master Badge & Background', value: '`/badge` (Buat badge permanen/limited time dan bagikan ke user), `/background` (Pasang custom background ke profil user).' },
-                        { name: '🏆 Master Achievements', value: '`/achievements_admin` (Buat master piala dan bagikan ke user).' },
-                        { name: '📜 Mission Control', value: '`/mission_admin` (Buat quest berbatas waktu dengan hadiah XP/Role/Badge untuk chat dan voice channel).' }
+                        { name: '🛠️ Core Setup', value: '`/setup` (Set Welcome & Booster Role), `/setup_snipe` (Set Role Investigasi Data), `/permission` (Kunci command rahasia).' },
+                        { name: '🎁 Level Rewards', value: '`/setup_rewards` (Otomatis memberikan tanda pengenal/Role saat Warga Gotham mencapai Level tertentu).' },
+                        { name: '🎖️ Master Badge & Background', value: '`/badge` (Buat lencana khusus/berbatas waktu dan bagikan ke warga), `/background` (Pasang profil kustom jalanan Gotham).' },
+                        { name: '🏆 Gelar Kepahlawanan', value: '`/achievements_admin` (Buat gelar pahlawan Gotham dan bagikan).' },
+                        { name: '📜 Papan Bounty GCPD', value: '`/mission_admin` (Buat Target Operasi berbatas waktu dengan hadiah XP/Role/Lencana).' }
                     );
             } 
             else if (selected === 'booster') {
-                newEmbed.setTitle('💎 Panduan Premium (Booster)')
-                    .setDescription('Kumpulan command eksklusif untuk member yang memiliki Role Booster.')
+                newEmbed.setTitle('💎 Panduan Elite (Gotham Booster)')
+                    .setDescription('Akses Terminal eksklusif untuk member yang menjadi donatur kota (Booster).')
                     .addFields(
-                        { name: '`/pc create`', value: 'Membuat Text Channel pribadi (Private Channel) yang hanya bisa dilihat oleh pembuatnya.' },
-                        { name: '`/pc rename` & `/pc delete`', value: 'Mengubah nama channel pribadi atau menghapusnya jika sudah tidak dipakai.' },
-                        { name: '`/role create`', value: 'Membuat Custom Role dengan warna pilihan sendiri (menggunakan kode HEX, misal: #FF0000).' },
-                        { name: '`/role edit` & `/role delete`', value: 'Mengubah warna role custom atau menghapusnya.' }
+                        { name: '`/pc create`', value: 'Membangun Markas Rahasia (Private Channel) yang hanya bisa dilihat olehmu.' },
+                        { name: '`/pc rename` & `/pc delete`', value: 'Menyamarkan nama markas atau meratakannya jika sudah ditinggalkan.' },
+                        { name: '`/role create`', value: 'Membuat Identitas Palsu (Custom Role) dengan warna jas setelan pilihan (opsi HEX, misal: #FF0000).' },
+                        { name: '`/role edit` & `/role delete`', value: 'Merias ulang jas warna atau menghancurkan identitas lamamu.' }
                     );
             }
             else if (selected === 'rpg') {
-                newEmbed.setTitle('🎮 Panduan RPG, Badge & Misi')
-                    .setDescription('Fitur interaktif dan ekonomi sosial untuk member server.')
+                newEmbed.setTitle('🎮 Peta Operasi Gotham (RPG)')
+                    .setDescription('Bertahan hidup di jalanan keras Gotham dan tingkatkan pengalamanmu.')
                     .addFields(
-                        { name: '💬 Cara Naik Level', value: 'Aktif mengobrol di text channel! Kamu akan mendapat XP setiap 1 menit (Anti-Spam System).' },
-                        { name: '`/profile`', value: 'Menampilkan Kartu Nama (Profile Card) keren yang berisi Foto, Bar EXP, Level, Lencana, dan Pencapaianmu.' },
-                        { name: '`/missions`', value: 'Membuka Papan Quest. Cek misi aktif (Chat/Voice) dan dapatkan hadiahnya secara otomatis sebelum waktu habis!' },
-                        { name: '`/claim`', value: 'Klaim Badge Limited Edition (Event Terbatas) sebelum masa tenggatnya habis.' },
-                        { name: '`/giftbadge`', value: 'Transfer/berikan badge milikmu kepada user lain secara cuma-cuma.' },
-                        { name: '`/mybadges` & `/achievements`', value: 'Atur badge dan achievement mana saja yang ingin kamu pamerkan di Profil Card-mu (Maks 8 Badge, Maks 3 Achievement).' }
+                        { name: '💬 Cara Naik Level', value: 'Eksis meronda malam di chat! Kamu mendapat XP tiap menit bertahan hidup (Anti-Spam System).' },
+                        { name: '`/profile`', value: 'Kartu Tanda Penduduk Gotham (ID Card). Tampilkan Foto, Bar Perjalanan Level, Lencana yang didapat, dsb.' },
+                        { name: '`/missions`', value: 'Akses Papan Buronan GCPD. Jalankan operasi target dan kumpulkan bayarannya di tengah malam!' },
+                        { name: '`/claim`', value: 'Klaim Pasokan Gelap (Badge Limited Edition) sebelum truk menghilang dari radar.' },
+                        { name: '`/giftbadge`', value: 'Berbagi harta jarahan Lencana ke Warga Gotham lainnya secara rahasia.' },
+                        { name: '`/mybadges` & `/achievements`', value: 'Atur lencana mana yang ingin disombongkan di KTP Gotham-mu (Maks 8 Badge, Maks 3 Gelar).' }
                     );
             }
             else if (selected === 'utility') {
-                newEmbed.setTitle('🛠️ Panduan Utility')
-                    .setDescription('Fitur utilitas sehari-hari.')
+                newEmbed.setTitle('🛠️ Alat Sabotase Utility')
+                    .setDescription('Gadget sehari-hari dari Lucius Fox.')
                     .addFields(
-                        { name: '`/snipe`', value: 'Membaca pesan terakhir yang baru saja dihapus oleh seseorang di channel tersebut (Butuh akses khusus dari Admin).' },
-                        { name: '`/ping`', value: 'Mengecek kecepatan respon dan latensi bot ke server Discord.' }
+                        { name: '`/snipe`', value: 'Menyadap pesan rahasia yang baru dikubur (dihapus) oleh mafia lain (Butuh izin Keamanan GCPD).' },
+                        { name: '`/ping`', value: 'Uji koneksi jaringan Bat-Signal menuju server utama Gotham.' }
                     );
             }
 

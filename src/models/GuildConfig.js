@@ -39,6 +39,10 @@ const GuildConfig = sequelize.define('GuildConfig', {
         type: DataTypes.STRING,
         allowNull: true,
     },
+    levelChannelId: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
 }, {
     tableName: 'guild_configs',
     timestamps: true, // Otomatis membuat kolom createdAt & updatedAt

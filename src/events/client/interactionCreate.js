@@ -64,10 +64,20 @@ module.exports = {
 
         } catch (error) {
             console.error(`[ERROR] Terjadi kesalahan saat menjalankan /${interaction.commandName}:`, error);
-            if (interaction.replied || interaction.deferred) {
-                await interaction.followUp({ content: '❌ Terjadi kesalahan saat mengeksekusi command ini!', ephemeral: true });
-            } else {
-                await interaction.reply({ content: '❌ Terjadi kesalahan saat mengeksekusi command ini!', ephemeral: true });
+            
+            try {
+                if (interaction.replied || interaction.deferred) {
+                    await interaction.followUp({ content: '❌ Terjadi kesalahan saat mengeksekusi command ini!', ephemeral: true });
+                } else {
+                    await interaction.reply({ content: '❌ Terjadi kesalahan atau bot terlalu lambat merespons!', ephemeral: true });
+                }
+            } catch (err) {
+                // Abaikan error jika interaksi memang sudah benar-benar mati di sisi Discord
+                if (err.code === 10062 || err.code === 40060) {
+                    console.warn(`[WARN] Gagal mengirim pesan balasan error karena interaksi sudah kedaluwarsa untuk /${interaction.commandName}.`);
+                } else {
+                    console.error('[ERROR] Gagal mengirim pesan error cadangan:', err);
+                }
             }
         }
     }

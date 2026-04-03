@@ -54,13 +54,13 @@ class LevelCommand extends BaseCommand {
                 // Anda bisa mengintegrasikan library pembuat gambar (seperti canvas/napi-rs) nanti jika ingin berupa gambar
                 const embed = new EmbedBuilder()
                     .setColor('#95A5A6') // Warna pink khas Booster Discord
-                    .setAuthor({ name: `Kartu Level Boost: ${member.user.username}`, iconURL: member.user.displayAvatarURL({ dynamic: true }) })
+                    .setAuthor({ name: `Sertifikat Donatur Utama: ${member.user.username}`, iconURL: member.user.displayAvatarURL({ dynamic: true }) })
                     .setThumbnail(guild.iconURL({ dynamic: true }))
                     .addFields(
-                        { name: 'Total Boost Diberikan', value: `🚀 **${totalBoosts} Boosts**`, inline: true },
-                        { name: 'Status Saat Ini', value: totalBoosts > 0 ? '🌟 Active Booster' : '👀 Menunggu Data', inline: true }
+                        { name: 'Suntikan Dana (Boost)', value: `🚀 **${totalBoosts} Boosts**`, inline: true },
+                        { name: 'Kasta Sosil', value: totalBoosts > 0 ? '🌟 Donatur Aktif Gotham' : '👀 Pengamat', inline: true }
                     )
-                    .setFooter({ text: 'Gunakan /level roles untuk mengklaim hadiahmu!' })
+                    .setFooter({ text: 'Akses /level roles untuk klaim keistimewaanmu!' })
                     .setTimestamp();
 
                 return interaction.reply({ embeds: [embed] });
@@ -95,8 +95,8 @@ class LevelCommand extends BaseCommand {
 
                 const embed = new EmbedBuilder()
                     .setColor('#95A5A6')
-                    .setTitle('🎉 Klaim Level Role Berhasil!')
-                    .setDescription(`Berdasarkan catatan **${totalBoosts} Boosts**, sistem sedang memeriksa dan memberikan role hadiah yang sesuai untukmu.\n\n*(Catatan Dev: Sistem sinkronisasi otomatis sedang dikembangkan)*`);
+                    .setTitle('🎉 Status Sosial (Level) Meroket!')
+                    .setDescription(`Dengan kucuran donasi **${totalBoosts} Boosts**, Balai Kota Gotham mulai mengakui pengaruhmu.\n\n*(Catatan Wayne Corp: Pengukuhan kasta secara otomatis sedang disiapkan)*`);
 
                 return interaction.reply({ embeds: [embed], ephemeral: true });
             }

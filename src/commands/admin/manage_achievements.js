@@ -58,8 +58,8 @@ class ManageAchievementsCommand extends BaseCommand {
 
                 const embed = new EmbedBuilder()
                     .setColor('#95A5A6')
-                    .setTitle('✅ Achievement Dibuat!')
-                    .setDescription(`Admin sekarang bisa membagikan Achievement ini menggunakan \`/achievements_admin give\`.\n\n**Detail:**\n${emoji} **${label}** (\`${code}\`)\n*${description}*`);
+                    .setTitle('✅ Gelar Kehormatan Dicetak!')
+                    .setDescription(`Komisaris dapat menyematkan Gelar Prestise ini melalui arsip \`/achievements_admin give\`.\n\n**Detail Rekam Jejak:**\n${emoji} **${label}** (\`${code}\`)\n*${description}*`);
 
                 return interaction.reply({ embeds: [embed] });
             }
@@ -94,8 +94,8 @@ class ManageAchievementsCommand extends BaseCommand {
 
                 const embed = new EmbedBuilder()
                     .setColor('#95A5A6')
-                    .setTitle('🎉 Achievement Unlocked!')
-                    .setDescription(`Selamat! ${targetUser} telah mendapatkan pencapaian:\n\n${achData.emoji} **${achData.label}**\n*${achData.description}*`);
+                    .setTitle('🎉 Penganugerahan Gelar!')
+                    .setDescription(`Diumumkan! ${targetUser} resmi menorehkan rekam jejak prestise di GCPD:\n\n${achData.emoji} **${achData.label}**\n*${achData.description}*`);
 
                 return interaction.reply({ embeds: [embed] });
             }

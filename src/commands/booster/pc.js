@@ -105,8 +105,8 @@ class PcCommand extends BaseCommand {
 
                 const embed = new EmbedBuilder()
                     .setColor('#95A5A6')
-                    .setTitle('🎉 Personal Channel Dibuat!')
-                    .setDescription(`Channel kamu siap digunakan: ${newChannel}\nKamu memiliki akses penuh untuk mengatur channel ini.`);
+                    .setTitle('🦇 Markas Rahasia Selesai Dibangun!')
+                    .setDescription(`Ruang interogasimu siap digunakan: ${newChannel}\nKamu memegang kendali penuh akses masuknya.`);
 
                 await interaction.reply({ embeds: [embed] });
             }

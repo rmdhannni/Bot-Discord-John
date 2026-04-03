@@ -23,11 +23,7 @@ const UserProfile = sequelize.define('UserProfile', {
         type: DataTypes.INTEGER,
         defaultValue: 0,
     },
-    // Reputasi yang diberikan user lain (+rep)
-    rep: {
-        type: DataTypes.INTEGER,
-        defaultValue: 0,
-    },
+
     // Bio singkat yang tampil di bawah kartu (About section)
     about: {
         type: DataTypes.STRING(280),

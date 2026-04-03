@@ -75,8 +75,8 @@ class AchievementsCommand extends BaseCommand {
 
             const embed = new EmbedBuilder()
                 .setColor('#95A5A6')
-                .setTitle('🏅 Lemari Achievement')
-                .setDescription('Pilih **maksimal 3 achievement** dari dropdown di bawah ini untuk ditampilkan di Kartu Nama kamu.');
+                .setTitle('🏅 Arsip Gelar Gotham')
+                .setDescription('Pilih **maksimal 3 Gelar Kehormatan** dari databse di bawah ini untuk ditampilkan di lisensimu.');
 
             const response = await interaction.reply({ 
                 embeds: [embed], 
@@ -103,7 +103,7 @@ class AchievementsCommand extends BaseCommand {
 
                 const successEmbed = new EmbedBuilder()
                     .setColor('#95A5A6')
-                    .setDescription(`✅ Berhasil memperbarui tampilan! **${selectedAchievements.length}** achievement akan ditampilkan di profilmu.`);
+                    .setDescription(`✅ ID Update Terdokumentasi! **${selectedAchievements.length}** rekam jejak akan ditambahkan.`);
 
                 await i.update({ embeds: [successEmbed], components: [] });
             });

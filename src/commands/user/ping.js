@@ -21,12 +21,12 @@ class PingCommand extends BaseCommand {
 
         const embed = new EmbedBuilder()
             .setColor('#95A5A6') // Hijau jika lancar, Orange jika agak lambat
-            .setTitle('🏓 Pong!')
+            .setTitle('🦇 Sinyal Bat-Signal Diterima!')
             .addFields(
-                { name: '🤖 Bot Latency', value: `\`${latency}ms\``, inline: true },
-                { name: '🌐 API Latency', value: `\`${apiLatency}ms\``, inline: true }
+                { name: '🤖 Batcomputer Latency', value: `\`${latency}ms\``, inline: true },
+                { name: '🌐 Jaringan Keamanan GCPD', value: `\`${apiLatency}ms\``, inline: true }
             )
-            .setFooter({ text: 'Sistem berjalan normal.' })
+            .setFooter({ text: 'Langit Gotham cerah malam ini.' })
             .setTimestamp();
 
         await interaction.editReply({ embeds: [embed] });

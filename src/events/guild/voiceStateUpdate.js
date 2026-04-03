@@ -89,8 +89,8 @@ module.exports = {
                             try {
                                 const embed = new EmbedBuilder()
                                     .setColor('#95A5A6')
-                                    .setTitle('🎙️ MISI VOICE SELESAI!')
-                                    .setDescription(`Selamat! Kamu berhasil menyelesaikan misi **${mission.title}** dengan nongkrong di Voice Channel!\n\n🎁 **Hadiahmu:** ${rewardMsg}`);
+                                    .setTitle('🎙️ PENYADAPAN GOTHAM SELESAI!')
+                                    .setDescription(`Luar biasa! Kamu berhasil menuntaskan penyadapan **${mission.title}** di Saluran Suara Rahasia!\n\n🎁 **Bayaranmu:** ${rewardMsg}`);
                                 await newState.member.send({ embeds: [embed] });
                             } catch (e) {
                                 console.log(`[INFO] Gagal mengirim DM ke user ${userId} untuk misi voice.`);

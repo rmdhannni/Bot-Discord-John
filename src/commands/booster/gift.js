@@ -91,9 +91,9 @@ class GiftCommand extends BaseCommand {
                 await targetUser.roles.add(customRole, `Diberikan (Gift) oleh pemilik role: ${member.user.tag}`);
 
                 const embed = new EmbedBuilder()
-                    .setColor(customRole.color || '#2ECC71')
-                    .setTitle('🎁 Role Berhasil Dibagikan!')
-                    .setDescription(`Kamu telah memberikan role ${customRole} kepada ${targetUser}.`);
+                    .setColor(customRole.color || '#95A5A6')
+                    .setTitle('🤝 Identitas Rahasia Dibagikan!')
+                    .setDescription(`Kamu telah memberikan penyamaran ${customRole} kepada ${targetUser}.`);
 
                 await interaction.reply({ embeds: [embed] });
             }
@@ -108,8 +108,8 @@ class GiftCommand extends BaseCommand {
 
                 const embed = new EmbedBuilder()
                     .setColor('#95A5A6')
-                    .setTitle('💔 Role Berhasil Ditarik!')
-                    .setDescription(`Kamu telah mengambil kembali role ${customRole} dari ${targetUser}.`);
+                    .setTitle('💔 Identitas Ditarik Kembali!')
+                    .setDescription(`Kamu melucuti penyamaran ${customRole} dari ${targetUser}.`);
 
                 await interaction.reply({ embeds: [embed] });
             }

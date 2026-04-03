@@ -51,8 +51,8 @@ class SnipeCommand extends BaseCommand {
                     name: snipedMessage.author.tag, 
                     iconURL: snipedMessage.author.displayAvatarURL({ dynamic: true }) 
                 })
-                .setDescription(snipedMessage.content || '*Pesan tidak memiliki teks (mungkin gambar/embed)*')
-                .setFooter({ text: `Dikirim pada` })
+                .setDescription(snipedMessage.content || '*Data hilang di gorong-gorong Gotham (mungkin berupa gambar/embed)*')
+                .setFooter({ text: `Dicegat pada` })
                 .setTimestamp(snipedMessage.timestamp);
 
             await interaction.reply({ embeds: [embed] });

@@ -24,8 +24,8 @@ class HelpCommand extends BaseCommand {
 
         const embed = new EmbedBuilder()
             .setColor('#95A5A6')
-            .setTitle('📚 Menu Bantuan (Help)')
-            .setDescription('Berikut adalah daftar perintah yang bisa kamu gunakan:')
+            .setTitle('💻 Akses Terminal Batcomputer (Bantuan)')
+            .setDescription('Berikut adalah dekripsi berkas perintah utilitas kota:')
             .setThumbnail(this.client.user.displayAvatarURL());
 
         // Looping untuk memasukkan kategori ke dalam Fields Embed

@@ -36,8 +36,8 @@ class SetupSnipeCommand extends BaseCommand {
 
             const embed = new EmbedBuilder()
                 .setColor('#95A5A6')
-                .setTitle('⚙️ Pengaturan Snipe Berhasil!')
-                .setDescription(`Sekarang hanya member dengan role ${targetRole} (dan Admin) yang bisa menggunakan command \`/snipe\`.`);
+                .setTitle('⚙️ Otoritas Penyadapan (Snipe) Disebar!')
+                .setDescription(`Sekarang aparat dengan tanda pengenal ${targetRole} (beserta Komisaris) punya akses ke arsip \`/snipe\`.`);
 
             return interaction.reply({ embeds: [embed] });
 

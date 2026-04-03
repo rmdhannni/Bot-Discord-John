@@ -24,16 +24,16 @@ class StatsCommand extends BaseCommand {
         const embed = new EmbedBuilder()
             .setColor('#95A5A6')
             .setAuthor({ name: this.client.user.username, iconURL: this.client.user.displayAvatarURL() })
-            .setTitle('📊 Statistik Bot')
+            .setTitle('📡 Status Jaringan Bat-Signal')
             .addFields(
-                { name: '🖥️ Servers', value: `\`${this.client.guilds.cache.size}\``, inline: true },
-                { name: '👥 Users', value: `\`${this.client.users.cache.size}\``, inline: true },
-                { name: '⏱️ Uptime', value: `\`${uptime}\``, inline: true },
-                { name: '💾 RAM Usage', value: `\`${memoryUsage} MB\``, inline: true },
-                { name: '⚙️ Node.js', value: `\`${process.version}\``, inline: true },
-                { name: '📚 Discord.js', value: `\`v${version}\``, inline: true }
+                { name: '🖥️ Distrik Gotham Terpantau', value: `\`${this.client.guilds.cache.size}\``, inline: true },
+                { name: '👥 Penduduk & Reserse', value: `\`${this.client.users.cache.size}\``, inline: true },
+                { name: '⏱️ Beroperasi Melawan Kejahatan', value: `\`${uptime}\``, inline: true },
+                { name: '💾 Kapasitas Penjara Arkham (RAM)', value: `\`${memoryUsage} MB\``, inline: true },
+                { name: '⚙️ Inti Reaktor Node', value: `\`${process.version}\``, inline: true },
+                { name: '📚 Jaringan Discord', value: `\`v${version}\``, inline: true }
             )
-            .setFooter({ text: 'Dibuat dengan ❤️ dan Clean Code' })
+            .setFooter({ text: 'Melindungi kota ini dari kegelapan' })
             .setTimestamp();
 
         await interaction.reply({ embeds: [embed] });

@@ -109,8 +109,8 @@ class RoleCommand extends BaseCommand {
 
                 const embed = new EmbedBuilder()
                     .setColor(warnaRole)
-                    .setTitle('🎨 Custom Role Berhasil Dibuat!')
-                    .setDescription(`Role ${newRole} telah ditambahkan ke profilmu.`);
+                    .setTitle('🎭 Identitas Palsu Berhasil Dibuat!')
+                    .setDescription(`Penyamaran ${newRole} telah ditambahkan ke data dirimu.`);
 
                 await interaction.reply({ embeds: [embed] });
             }
@@ -142,8 +142,8 @@ class RoleCommand extends BaseCommand {
 
                 const embed = new EmbedBuilder()
                     .setColor(warnaBaru || roleToEdit.color)
-                    .setTitle('✏️ Custom Role Diperbarui!')
-                    .setDescription(`Role kamu sekarang: ${roleToEdit}`);
+                    .setTitle('✏️ Identitas Diubah!')
+                    .setDescription(`Penyamaran jalur bawah tanahmu sekarang: ${roleToEdit}`);
 
                 await interaction.reply({ embeds: [embed] });
             }

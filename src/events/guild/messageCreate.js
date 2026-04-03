@@ -2,6 +2,7 @@ const UserProfile = require('../../models/UserProfile');
 const LevelReward = require('../../models/LevelReward');
 const Mission = require('../../models/Mission');
 const UserProgress = require('../../models/UserProgress');
+const GuildConfig = require('../../models/GuildConfig');
 const { EmbedBuilder } = require('discord.js');
 const { Op } = require('sequelize');
 
@@ -81,8 +82,8 @@ module.exports = {
                         // Kirim Pengumuman Misi Selesai ke Channel
                         const embed = new EmbedBuilder()
                             .setColor('#95A5A6')
-                            .setTitle('🎊 MISI SELESAI!')
-                            .setDescription(`Selamat ${message.author}! Kamu berhasil menyelesaikan misi **${mission.title}**!\n\n🎁 **Hadiahmu:** ${rewardMsg}`);
+                            .setTitle('🦇 MISI GOTHAM SELESAI!')
+                            .setDescription(`Kerja bagus ${message.author}! Target operasi **${mission.title}** berhasil diamankan!\n\n🎁 **Bayaranmu:** ${rewardMsg}`);
                         
                         await message.channel.send({ content: `${message.author}`, embeds: [embed] });
                     }
@@ -137,6 +138,11 @@ module.exports = {
             if (isLevelUp) {
                 let rewardText = ''; 
                 
+                // Ambil config server untuk cek channel notifikasi
+                const config = await GuildConfig.findOne({ where: { guildId: guildId } });
+                const targetChannelId = config?.levelChannelId;
+                const targetChannel = targetChannelId ? message.guild.channels.cache.get(targetChannelId) : message.channel;
+
                 // Cek apakah ada hadiah Role di level baru ini
                 const rewardData = await LevelReward.findOne({ 
                     where: { guildId: guildId, level: profile.level } 
@@ -155,11 +161,26 @@ module.exports = {
                 }
 
                 // Kirim ucapan selamat naik level
+                // Jika server ID adalah 1309013825005031425, gunakan styling spesial Gotham
+                const isGothamServer = guildId === '1309013825005031425';
                 const embed = new EmbedBuilder()
                     .setColor('#95A5A6')
-                    .setDescription(`🎉 Selamat <@${userId}>! Kamu baru saja mencapai **Level ${profile.level}**!${rewardText}`);
+                    .setAuthor({ 
+                        name: isGothamServer ? 'REPUTASI GOTHAM MENINGKAT!' : 'LEVEL UP!', 
+                        iconURL: isGothamServer ? 'https://cdn.discordapp.com/emojis/1305412852231573524.png' : null 
+                    })
+                    .setDescription(`🦇 Luar biasa <@${userId}>! Reputasimu di jalanan naik ke **Level ${profile.level}**!${rewardText}`)
+                    .setThumbnail(message.author.displayAvatarURL({ dynamic: true }))
+                    .setTimestamp();
                 
-                await message.channel.send({ embeds: [embed] });
+                if (targetChannel) {
+                    await targetChannel.send({ content: `<@${userId}>`, embeds: [embed] }).catch(() => {
+                        // Fallback ke channel saat ini jika bot tidak punya izin di targetChannel
+                        message.channel.send({ content: `<@${userId}>`, embeds: [embed] });
+                    });
+                } else {
+                    await message.channel.send({ content: `<@${userId}>`, embeds: [embed] });
+                }
             }
 
         } catch (error) {

@@ -23,16 +23,16 @@ class MyBadgesCommand extends BaseCommand {
 
             if (ownedBadgeIds.length === 0) {
                 const noBadgeEmbed = new EmbedBuilder()
-                    .setColor('#5865F2')
-                    .setTitle('🎖️ Kamu Belum Punya Badge')
+                    .setColor('#95A5A6')
+                    .setTitle('🦇 Lencana Gotham Tidak Ditemukan')
                     .setDescription(
-                        'Kamu belum memiliki badge satupun saat ini.\n\n' +
-                        '**Bagaimana cara mendapatkan badge?**\n' +
-                        '> • Ikuti event atau giveaway di server\n' +
-                        '> • Menjadi donatur server\n' +
-                        '> • Badge diberikan langsung oleh Admin'
+                        'Kamu adalah warga biasa, belum menemukan Lencana satupun malam ini.\n\n' +
+                        '**Darimana Lencana Ini Berasal?**\n' +
+                        '> • Terlibat dalam Operasi Rahasia (Event)\n' +
+                        '> • Menjadi Donatur Mafia (Booster)\n' +
+                        '> • Lencana kehormatan dari Komisaris GCPD (Admin)'
                     )
-                    .setFooter({ text: 'Badge kamu akan muncul di sini setelah diterima.' });
+                    .setFooter({ text: 'Lencana yang diamankan akan rilis di sini.' });
                 return interaction.reply({ embeds: [noBadgeEmbed], ephemeral: true });
             }
 

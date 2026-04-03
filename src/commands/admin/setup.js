@@ -37,6 +37,20 @@ class SetupCommand extends BaseCommand {
                             required: true
                         }
                     ]
+                },
+                {
+                    name: 'level',
+                    description: 'Atur channel untuk notifikasi naik level',
+                    type: 1, // SUB_COMMAND
+                    options: [
+                        {
+                            name: 'channel',
+                            description: 'Pilih channel teks untuk mengirim notifikasi',
+                            type: 7, // 7 = Tipe CHANNEL
+                            required: true,
+                            channelTypes: [ChannelType.GuildText]
+                        }
+                    ]
                 }
             ]
         });
@@ -66,8 +80,8 @@ class SetupCommand extends BaseCommand {
                 config.welcomeChannelId = channel.id;
                 await config.save();
 
-                embed.setTitle('✅ Setup Welcome Berhasil!')
-                     .setDescription(`Pesan Welcome & Goodbye sekarang akan dikirim ke ${channel}`);
+                embed.setTitle('🦇 Rute Kedatangan Warga Sipil Ditetapkan!')
+                     .setDescription(`Laporan pendatang baru di Gotham akan dikirim ke ${channel}`);
             }
 
             // Logika untuk sub-command '/setup booster'
@@ -78,8 +92,19 @@ class SetupCommand extends BaseCommand {
                 config.boosterRoleId = role.id;
                 await config.save();
 
-                embed.setTitle('✅ Setup Booster Berhasil!')
-                     .setDescription(`Role utama Booster telah diatur ke ${role}`);
+                embed.setTitle('💎 Setup Akses VIP Mengudara!')
+                     .setDescription(`Sistem mengenali donatur Elite (Booster) sebagai ${role}`);
+            }
+
+            // Logika untuk sub-command '/setup level'
+            if (subCommand === 'level') {
+                const channel = interaction.options.getChannel('channel');
+                
+                config.levelChannelId = channel.id;
+                await config.save();
+
+                embed.setTitle('📈 Sistem Reputasi Diluncurkan!')
+                     .setDescription(`Setiap kenaikan derajat (level) warga akan diumumkan di ${channel}`);
             }
 
             // Kirim balasan ephemeral (hanya bisa dilihat oleh Admin yang mengeksekusi)

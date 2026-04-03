@@ -59,7 +59,7 @@ class PermissionCommand extends BaseCommand {
                 permData.changed('allowedRoles', true);
                 await permData.save();
 
-                return interaction.reply({ content: `✅ Berhasil! Role ${targetRole} sekarang **DIIZINKAN** menggunakan command \`/${commandName}\`.` });
+                return interaction.reply({ content: `✅ Izin Diberikan! Aparat dengan seragam ${targetRole} sekarang memiliki otoritas mengakses \`/${commandName}\`.` });
             }
 
             if (subCommand === 'remove') {
@@ -71,7 +71,7 @@ class PermissionCommand extends BaseCommand {
                 permData.changed('allowedRoles', true);
                 await permData.save();
 
-                return interaction.reply({ content: `🗑️ Berhasil! Izin Role ${targetRole} untuk command \`/${commandName}\` telah **DICABUT**.` });
+                return interaction.reply({ content: `🗑️ Izin Dicabut! Otoritas ${targetRole} untuk mengakses \`/${commandName}\` resmi **DIBEKUKAN**.` });
             }
         } catch (error) {
             console.error('[ERROR] Gagal mengatur permission:', error);
