@@ -5,12 +5,12 @@ const UserProfile = require('../../models/UserProfile');
 const Badge = require('../../models/Badge');
 const Achievement = require('../../models/Achievement');
 const GuildConfig = require('../../models/GuildConfig');
-const { AttachmentBuilder } = require('discord.js');
+const { AttachmentBuilder, PermissionFlagsBits } = require('discord.js');
 const { createCanvas, loadImage } = require('@napi-rs/canvas');
-const path  = require('path');
-const fs    = require('fs');
+const path = require('path');
+const fs = require('fs');
 const https = require('https');
-const http  = require('http');
+const http = require('http');
 
 // ─────────────────────────────────────────────
 // Cache emoji custom Discord ke file lokal
@@ -24,23 +24,23 @@ function downloadToCache(url, filename) {
         if (fs.existsSync(dest)) return resolve(dest);
 
         const proto = url.startsWith('https') ? https : http;
-        const file  = fs.createWriteStream(dest);
+        const file = fs.createWriteStream(dest);
 
         proto.get(url, (res) => {
             if (res.statusCode === 301 || res.statusCode === 302) {
                 file.close();
-                fs.unlink(dest, () => {});
+                fs.unlink(dest, () => { });
                 return downloadToCache(res.headers.location, filename).then(resolve).catch(reject);
             }
             if (res.statusCode !== 200) {
                 file.close();
-                fs.unlink(dest, () => {});
+                fs.unlink(dest, () => { });
                 return reject(new Error(`HTTP ${res.statusCode} for ${url}`));
             }
             res.pipe(file);
             file.on('finish', () => file.close(() => resolve(dest)));
         }).on('error', (err) => {
-            fs.unlink(dest, () => {});
+            fs.unlink(dest, () => { });
             reject(err);
         });
     });
@@ -96,12 +96,12 @@ function ellipsis(ctx, text, maxW) {
 // ═════════════════════════════════════════════
 class ProfileCardRenderer {
     constructor(data) {
-        this.user         = data.user;
-        this.profile      = data.profile;
-        this.config       = data.config || {};
-        this.badges       = data.badges || []; // Sudah di-fetch dari DB oleh execute()
+        this.user = data.user;
+        this.profile = data.profile;
+        this.config = data.config || {};
+        this.badges = data.badges || []; // Sudah di-fetch dari DB oleh execute()
         this.achievements = (data.achievements || []).slice(0, 5);
-        this.roleName     = data.roleName || 'Member';
+        this.roleName = data.roleName || 'Member';
     }
 
     get xpStats() {
@@ -210,7 +210,7 @@ class ProfileCardRenderer {
 
         ctx.font = '18px sans-serif';
         ctx.fillStyle = '#A0A0A0';
-        ctx.fillText(this.roleName, LAYOUT.ROLE_X, LAYOUT.ROLE_Y);
+        ctx.fillText(this.profile.customTitle || this.roleName, LAYOUT.ROLE_X, LAYOUT.ROLE_Y);
     }
 
     async _drawBadges(ctx) {
@@ -327,19 +327,19 @@ class ProfileCardRenderer {
     }
 
     async _drawAbout(ctx) {
-        const aboutText = this.profile.about || 'Belum ada deskripsi.\nGunakan /aboutme untuk mengatur ini.';
+        const aboutText = this.profile.about || 'Belum ada deskripsi.\nGunakan /aboutset untuk mengatur ini.';
         const { COL_LEFT_X, COL_HEAD_Y, ABOUT_TEXT_Y } = LAYOUT;
 
         // Custom emoji <:chatbubble:1488086302019555419>
         const EMOJI_SIZE = 36;
-        const EMOJI_GAP  = 10;
-        let headerTextX  = COL_LEFT_X;
+        const EMOJI_GAP = 10;
+        let headerTextX = COL_LEFT_X;
 
         try {
-            const emojiUrl  = 'https://cdn.discordapp.com/emojis/1488086302019555419.png?size=64';
+            const emojiUrl = 'https://cdn.discordapp.com/emojis/1488086302019555419.png?size=64';
             const localPath = await downloadToCache(emojiUrl, 'chatbubble_1488086302019555419.png');
-            const emojiImg  = await loadImage(localPath);
-            const emojiY    = COL_HEAD_Y - EMOJI_SIZE + 4;
+            const emojiImg = await loadImage(localPath);
+            const emojiY = COL_HEAD_Y - EMOJI_SIZE + 4;
             ctx.drawImage(emojiImg, COL_LEFT_X, emojiY, EMOJI_SIZE, EMOJI_SIZE);
             headerTextX = COL_LEFT_X + EMOJI_SIZE + EMOJI_GAP;
         } catch (err) {
@@ -348,7 +348,7 @@ class ProfileCardRenderer {
 
         ctx.font = 'bold 36px sans-serif';
         ctx.textAlign = 'left'; ctx.fillStyle = '#FFFFFF';
-        ctx.fillText('About Me', headerTextX, COL_HEAD_Y);
+        ctx.fillText('About Set', headerTextX, COL_HEAD_Y);
 
         ctx.font = '18px sans-serif'; ctx.fillStyle = '#CCCCCC';
 
@@ -375,14 +375,14 @@ class ProfileCardRenderer {
 
         // Custom emoji <:trophy:1488086268486357033>
         const EMOJI_SIZE = 36;
-        const EMOJI_GAP  = 10;
-        let headerTextX  = COL_RIGHT_X;
+        const EMOJI_GAP = 10;
+        let headerTextX = COL_RIGHT_X;
 
         try {
-            const emojiUrl  = 'https://cdn.discordapp.com/emojis/1488086268486357033.png?size=64';
+            const emojiUrl = 'https://cdn.discordapp.com/emojis/1488086268486357033.png?size=64';
             const localPath = await downloadToCache(emojiUrl, 'trophy_1488086268486357033.png');
-            const emojiImg  = await loadImage(localPath);
-            const emojiY    = COL_HEAD_Y - EMOJI_SIZE + 4;
+            const emojiImg = await loadImage(localPath);
+            const emojiY = COL_HEAD_Y - EMOJI_SIZE + 4;
             ctx.drawImage(emojiImg, COL_RIGHT_X, emojiY, EMOJI_SIZE, EMOJI_SIZE);
             headerTextX = COL_RIGHT_X + EMOJI_SIZE + EMOJI_GAP;
         } catch (err) {
@@ -398,13 +398,66 @@ class ProfileCardRenderer {
             ctx.fillText('—', COL_RIGHT_X, ACH_Y); return;
         }
 
-        this.achievements.forEach((ach, i) => {
+        for (let i = 0; i < this.achievements.length; i++) {
+            const ach = this.achievements[i];
             const y = ACH_Y + i * ACH_LINE;
-            const emoji = ach.emoji ? ach.emoji + ' ' : '🏅 ';
+            const emojiStr = ach.emoji || '🏅';
             const lbl = ach.label || 'Unknown';
-            ctx.font = 'bold 18px sans-serif'; ctx.fillStyle = '#FFFFFF'; ctx.textAlign = 'left';
-            ctx.fillText(ellipsis(ctx, emoji + lbl, 420), COL_RIGHT_X, y);
-        });
+            const imageUrl = ach.imageUrl;
+
+            let currentX = COL_RIGHT_X;
+            const drawSize = 26;
+
+            if (imageUrl) {
+                // --- Logika Gambar Kustom Achievement ---
+                const achDir = path.join(__dirname, '../../../assets/achievements');
+                const achPath = path.join(achDir, imageUrl);
+                if (fs.existsSync(achPath)) {
+                    try {
+                        const img = await loadImage(achPath);
+                        ctx.drawImage(img, currentX, y - drawSize + 4, drawSize, drawSize);
+                        currentX += drawSize + 8;
+                    } catch (e) {
+                        ctx.font = '18px sans-serif';
+                        ctx.fillText('🏅', currentX, y);
+                        currentX += 24 + 8;
+                    }
+                } else {
+                    ctx.font = '18px sans-serif';
+                    ctx.fillText('🏅', currentX, y);
+                    currentX += 24 + 8;
+                }
+            } else {
+                // --- Logika Emoji (Custom atau Standard) ---
+                const customEmojiMatch = emojiStr.match(/<(a?):(\w+):(\d+)>/);
+                if (customEmojiMatch) {
+                    const emojiId = customEmojiMatch[3];
+                    const emojiUrl = `https://cdn.discordapp.com/emojis/${emojiId}.png?size=48`;
+                    try {
+                        const localPath = await downloadToCache(emojiUrl, `emoji_${emojiId}.png`);
+                        const emojiImg = await loadImage(localPath);
+                        ctx.drawImage(emojiImg, currentX, y - drawSize + 4, drawSize, drawSize);
+                        currentX += drawSize + 8;
+                    } catch (e) {
+                        ctx.font = '18px "Segoe UI Emoji", "Noto Color Emoji", sans-serif';
+                        ctx.fillText('🏅', currentX, y);
+                        currentX += 24 + 8;
+                    }
+                } else {
+                    ctx.font = '18px "Segoe UI Emoji", "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Symbol", sans-serif';
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.fillText(emojiStr, currentX, y);
+                    currentX += ctx.measureText(emojiStr).width + 8;
+                }
+            }
+
+            // --- Tulis Label Nama Achievement ---
+            ctx.font = 'bold 18px sans-serif';
+            ctx.fillStyle = '#FFFFFF';
+            ctx.textAlign = 'left';
+            const remainingWidth = 420 - (currentX - COL_RIGHT_X);
+            ctx.fillText(ellipsis(ctx, lbl, remainingWidth), currentX, y);
+        }
     }
 }
 
@@ -454,17 +507,21 @@ class ProfileCommand extends BaseCommand {
                 achData = await Achievement.findAll({ where: { guildId: guildId, code: displayedAchCodes } });
             }
 
-            // 4. Ambil Role Tertinggi User 
-            let highestRoleName = 'Member';
-            if (targetMember && targetMember.roles) {
-                // Filter role '@everyone' agar tidak ditampilkan sebagai role tertinggi
-                const roles = targetMember.roles.cache.filter(role => role.name !== '@everyone').sort((a, b) => b.position - a.position);
-                const highestRole = roles.first();
-                if (highestRole) {
-                    highestRoleName = highestRole.name;
-                }
+            // 4. Logika Penentuan Judul/Role di Card
+            let statusTitle = 'Member';
+            const staffRoles = config.staffRoles || [];
+
+            const isStaff = targetMember && (
+                targetMember.permissions.has(PermissionFlagsBits.Administrator) || 
+                staffRoles.some(roleId => targetMember.roles.cache.has(roleId))
+            );
+
+            if (isStaff) {
+                statusTitle = 'Staff';
             }
 
+            // Catatan: customTitle akan diprioritaskan di dalam ProfileCardRenderer
+            
             // 5. MINTA CLASS RENDERER UNTUK MENGGAMBAR!
             const renderer = new ProfileCardRenderer({
                 user: targetUser,
@@ -472,7 +529,7 @@ class ProfileCommand extends BaseCommand {
                 config: config,
                 badges: badgesData,
                 achievements: achData,
-                roleName: highestRoleName
+                roleName: statusTitle
             });
 
             // 5. Ekspor menjadi PNG dan kirim

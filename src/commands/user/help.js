@@ -1,5 +1,5 @@
 const BaseCommand = require('../../structures/BaseCommand');
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, PermissionFlagsBits } = require('discord.js');
 
 class HelpCommand extends BaseCommand {
     constructor(client) {
@@ -28,10 +28,12 @@ class HelpCommand extends BaseCommand {
             .setDescription('Berikut adalah dekripsi berkas perintah utilitas kota:')
             .setThumbnail(this.client.user.displayAvatarURL());
 
+        const isAdmin = interaction.member.permissions.has(PermissionFlagsBits.Administrator);
+
         // Looping untuk memasukkan kategori ke dalam Fields Embed
         for (const [category, cmds] of Object.entries(categories)) {
             // Sembunyikan kategori Admin dari user biasa agar rapi
-            if (category === 'Admin') continue; 
+            if (category === 'Admin' && !isAdmin) continue; 
             
             embed.addFields({
                 name: `📌 ${category} Commands`,
@@ -40,12 +42,14 @@ class HelpCommand extends BaseCommand {
             });
         }
 
-        // Tambahkan catatan khusus untuk command admin
-        embed.addFields({
-            name: '🛠️ Admin Commands',
-            value: '*(Perintah admin seperti `/setup` dan `/greet` disembunyikan dari publik dan hanya muncul jika kamu memiliki izin Administrator).*',
-            inline: false
-        });
+        if (!isAdmin) {
+            // Tambahkan catatan khusus untuk user biasa
+            embed.addFields({
+                name: '🛠️ Admin Commands',
+                value: '*(Perintah administratif disembunyikan dari publik. Hanya dapat diakses oleh Komisaris Gotham/Admin).*',
+                inline: false
+            });
+        }
 
         await interaction.reply({ embeds: [embed], ephemeral: true }); // Ephemeral agar tidak nyepam di chat
     }

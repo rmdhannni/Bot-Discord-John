@@ -20,18 +20,13 @@ class SnipeCommand extends BaseCommand {
             const config = await GuildConfig.findOne({ where: { guildId: guildId } });
 
             // 2. Cek apakah Admin sudah mengatur Role untuk Snipe
-            if (!config || !config.snipeRoleId) {
-                return interaction.reply({ 
-                    content: '❌ Fitur Snipe belum diaktifkan. Admin harus mengatur role menggunakan `/setup_snipe` terlebih dahulu.', 
-                    ephemeral: true 
-                });
-            }
-
-            // 3. GATEKEEPER: Cek apakah user punya Role tersebut ATAU user adalah Administrator
-            const hasRole = member.roles.cache.has(config.snipeRoleId);
+            const allowedRoles = config?.snipeAllowedRoles || [];
             const isAdmin = member.permissions.has(PermissionFlagsBits.Administrator);
 
-            if (!hasRole && !isAdmin) {
+            // 3. GATEKEEPER: Cek apakah user punya setidaknya salah satu Role tersebut ATAU Administrator
+            const hasAccess = allowedRoles.some(roleID => member.roles.cache.has(roleID));
+
+            if (!hasAccess && !isAdmin) {
                 return interaction.reply({ 
                     content: '🔒 Akses Ditolak! Kamu tidak memiliki role yang diizinkan untuk menggunakan fitur ini.', 
                     ephemeral: true 

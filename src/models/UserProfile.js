@@ -49,6 +49,14 @@ const UserProfile = sequelize.define('UserProfile', {
         type: DataTypes.JSON,
         defaultValue: [], // Badge yang dipilih user untuk tampil di Canvas
     },
+    xpNotification: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+    },
+    customTitle: {
+        type: DataTypes.STRING(50),
+        allowNull: true,
+    },
 }, {
     tableName: 'user_profiles',
     timestamps: true,

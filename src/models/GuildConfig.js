@@ -23,17 +23,17 @@ const GuildConfig = sequelize.define('GuildConfig', {
         type: DataTypes.STRING,
         allowNull: true, // Kategori untuk Personal Channels (pcs)
     },
-    snipeRoleId: {
-        type: DataTypes.STRING,
-        allowNull: true 
+    snipeAllowedRoles: {
+        type: DataTypes.JSON,
+        defaultValue: []
     },
     welcomeMessage: {
-    type: DataTypes.TEXT,
-    allowNull: true,
+        type: DataTypes.TEXT,
+        allowNull: true,
     },
     leaveMessage: {
-    type: DataTypes.TEXT,
-    allowNull: true,
+        type: DataTypes.TEXT,
+        allowNull: true,
     },
     defaultBackground: {
         type: DataTypes.STRING,
@@ -41,6 +41,82 @@ const GuildConfig = sequelize.define('GuildConfig', {
     },
     levelChannelId: {
         type: DataTypes.STRING,
+        allowNull: true,
+    },
+    staffRoleId: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    welcomeTitle: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    welcomeThumbnail: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    welcomeImage: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    welcomeFooter: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    welcomeColor: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    goodbyeChannelId: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    goodbyeTitle: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    goodbyeThumbnail: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    goodbyeImage: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    goodbyeFooter: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    goodbyeColor: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    levelUpMessage: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
+    levelUpTitle: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    levelUpThumbnail: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    levelUpImage: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    levelUpFooter: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    levelUpColor: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    levelUpContent: {
+        type: DataTypes.TEXT,
         allowNull: true,
     },
 }, {

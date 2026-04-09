@@ -1,10 +1,10 @@
 'use strict';
 
 const { createCanvas, loadImage } = require('@napi-rs/canvas');
-const path  = require('path');
-const fs    = require('fs');
+const path = require('path');
+const fs = require('fs');
 const https = require('https');
-const http  = require('http');
+const http = require('http');
 
 // ─────────────────────────────────────────────
 // Cache emoji custom Discord ke file lokal
@@ -24,24 +24,24 @@ function downloadToCache(url, filename) {
         if (fs.existsSync(dest)) return resolve(dest);
 
         const proto = url.startsWith('https') ? https : http;
-        const file  = fs.createWriteStream(dest);
+        const file = fs.createWriteStream(dest);
 
         proto.get(url, (res) => {
             // Ikuti redirect
             if (res.statusCode === 301 || res.statusCode === 302) {
                 file.close();
-                fs.unlink(dest, () => {});
+                fs.unlink(dest, () => { });
                 return downloadToCache(res.headers.location, filename).then(resolve).catch(reject);
             }
             if (res.statusCode !== 200) {
                 file.close();
-                fs.unlink(dest, () => {});
+                fs.unlink(dest, () => { });
                 return reject(new Error(`HTTP ${res.statusCode} for ${url}`));
             }
             res.pipe(file);
             file.on('finish', () => file.close(() => resolve(dest)));
         }).on('error', (err) => {
-            fs.unlink(dest, () => {});
+            fs.unlink(dest, () => { });
             reject(err);
         });
     });
@@ -398,10 +398,10 @@ class ProfileCardRenderer {
         let headerTextX = COL_LEFT_X;
 
         try {
-            const emojiUrl  = 'https://cdn.discordapp.com/emojis/1488086302019555419.png?size=64';
+            const emojiUrl = 'https://cdn.discordapp.com/emojis/1488086302019555419.png?size=64';
             const localPath = await downloadToCache(emojiUrl, 'chatbubble_1488086302019555419.png');
-            const emojiImg  = await loadImage(localPath);
-            const emojiY    = COL_HEAD_Y - EMOJI_SIZE + 4;
+            const emojiImg = await loadImage(localPath);
+            const emojiY = COL_HEAD_Y - EMOJI_SIZE + 4;
             ctx.drawImage(emojiImg, COL_LEFT_X, emojiY, EMOJI_SIZE, EMOJI_SIZE);
             headerTextX = COL_LEFT_X + EMOJI_SIZE + EMOJI_GAP;
         } catch (err) {
@@ -411,7 +411,7 @@ class ProfileCardRenderer {
         ctx.font = 'bold 36px sans-serif';
         ctx.textAlign = 'left';
         ctx.fillStyle = '#FFFFFF';
-        ctx.fillText('About Me', headerTextX, COL_HEAD_Y);
+        ctx.fillText('About Set', headerTextX, COL_HEAD_Y);
 
         ctx.font = '18px sans-serif';
         ctx.fillStyle = '#CCCCCC';
@@ -451,10 +451,10 @@ class ProfileCardRenderer {
         let headerTextX = COL_RIGHT_X;
 
         try {
-            const emojiUrl  = 'https://cdn.discordapp.com/emojis/1488086268486357033.png?size=64';
+            const emojiUrl = 'https://cdn.discordapp.com/emojis/1488086268486357033.png?size=64';
             const localPath = await downloadToCache(emojiUrl, 'trophy_1488086268486357033.png');
-            const emojiImg  = await loadImage(localPath);
-            const emojiY    = COL_HEAD_Y - EMOJI_SIZE + 4;
+            const emojiImg = await loadImage(localPath);
+            const emojiY = COL_HEAD_Y - EMOJI_SIZE + 4;
             ctx.drawImage(emojiImg, COL_RIGHT_X, emojiY, EMOJI_SIZE, EMOJI_SIZE);
             headerTextX = COL_RIGHT_X + EMOJI_SIZE + EMOJI_GAP;
         } catch (err) {
@@ -473,16 +473,44 @@ class ProfileCardRenderer {
             return;
         }
 
-        this.achievements.forEach((ach, i) => {
+        for (let i = 0; i < this.achievements.length; i++) {
+            const ach = this.achievements[i];
             const y = ACH_Y + i * ACH_LINE;
-            const emoji = ach.emoji ? ach.emoji + ' ' : '🏅 ';
+            const emojiStr = ach.emoji || '🏅';
             const lbl = ach.label || 'Unknown';
+
+            let currentX = COL_RIGHT_X;
+
+            // --- Logika Pendukung Emoji Custom Discord ---
+            const customEmojiMatch = emojiStr.match(/<(a?):(\w+):(\d+)>/);
+            if (customEmojiMatch) {
+                const emojiId = customEmojiMatch[3];
+                const emojiUrl = `https://cdn.discordapp.com/emojis/${emojiId}.png?size=48`;
+                const drawSize = 26;
+                try {
+                    const localPath = await downloadToCache(emojiUrl, `emoji_${emojiId}.png`);
+                    const emojiImg = await loadImage(localPath);
+                    ctx.drawImage(emojiImg, currentX, y - drawSize + 4, drawSize, drawSize);
+                    currentX += drawSize + 8;
+                } catch (e) {
+                    ctx.font = '18px "Segoe UI Emoji", "Noto Color Emoji", sans-serif';
+                    ctx.fillText('🏅', currentX, y);
+                    currentX += 24;
+                }
+            } else {
+                // --- Standard Unicode Emoji ---
+                ctx.font = '18px "Segoe UI Emoji", "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Symbol", sans-serif';
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillText(emojiStr, currentX, y);
+                currentX += ctx.measureText(emojiStr).width + 8;
+            }
 
             ctx.font = 'bold 18px sans-serif';
             ctx.fillStyle = '#FFFFFF';
             ctx.textAlign = 'left';
-            ctx.fillText(ellipsis(ctx, emoji + lbl, 420), COL_RIGHT_X, y);
-        });
+            const remainingWidth = 420 - (currentX - COL_RIGHT_X);
+            ctx.fillText(ellipsis(ctx, lbl, remainingWidth), currentX, y);
+        }
     }
 }
 

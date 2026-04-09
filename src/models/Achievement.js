@@ -21,6 +21,10 @@ const Achievement = sequelize.define('Achievement', {
     emoji: {
         type: DataTypes.STRING,
         allowNull: true, // Emoji bawaan Discord (misal: 🏆 atau 💎)
+    },
+    imageUrl: {
+        type: DataTypes.STRING,
+        allowNull: true, // File gambar lokal (seperti badge)
     }
 }, {
     tableName: 'achievements_master',

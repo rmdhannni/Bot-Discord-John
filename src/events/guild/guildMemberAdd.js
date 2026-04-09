@@ -18,8 +18,8 @@ module.exports = {
             const rawMessage = config.welcomeMessage || "Halo {user}! Selamat datang di **{server}**. Jangan lupa baca rules ya!";
             const formattedMessage = MessageFormatter.format(rawMessage, member);
 
-            // Bangun Embed-nya
-            const welcomeEmbed = WelcomeEmbedBuilder.buildWelcome(member, formattedMessage);
+            // Bangun Embed-nya (Sesuai Konfigurasi Database)
+            const welcomeEmbed = WelcomeEmbedBuilder.buildWelcome(member, config, formattedMessage);
 
             // Kirim pesan: Mention user di luar embed, lalu tampilkan embed di bawahnya
             await channel.send({ 

@@ -10,13 +10,17 @@ const Badge = sequelize.define('Badge', {
         type: DataTypes.STRING,
         allowNull: false, // Contoh: "VIP_Donator"
     },
+    description: {
+        type: DataTypes.STRING,
+        allowNull: true, // Deskripsi singkat untuk badge
+    },
     emojiId: {
         type: DataTypes.STRING,
-        allowNull: false, // Menyimpan ID Emoji Discord yang berhasil dibuat
+        allowNull: true,
     },
     emojiFormat: {
         type: DataTypes.STRING,
-        allowNull: false, // Format tag untuk di chat, contoh: <:VIP_Donator:123456789>
+        allowNull: true,
     },
     imageUrl: {
         type: DataTypes.STRING,

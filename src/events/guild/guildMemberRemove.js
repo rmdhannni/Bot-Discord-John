@@ -9,17 +9,19 @@ module.exports = {
     async execute(member, client) {
         try {
             const config = await GuildConfig.findOne({ where: { guildId: member.guild.id } });
-            
-            // Asumsi menggunakan channel welcome untuk goodbye juga
-            if (!config || !config.welcomeChannelId) return;
+            if (!config) return;
 
-            const channel = member.guild.channels.cache.get(config.welcomeChannelId);
+            // Gunakan goodbyeChannelId, jika tidak ada fallback ke welcomeChannelId
+            const channelId = config.goodbyeChannelId || config.welcomeChannelId;
+            if (!channelId) return;
+
+            const channel = member.guild.channels.cache.get(channelId);
             if (!channel) return;
 
             const rawMessage = config.leaveMessage || "Yah, **{username}** telah keluar dari server. Sampai jumpa lagi!";
             const formattedMessage = MessageFormatter.format(rawMessage, member);
 
-            const goodbyeEmbed = WelcomeEmbedBuilder.buildGoodbye(member, formattedMessage);
+            const goodbyeEmbed = WelcomeEmbedBuilder.buildGoodbye(member, config, formattedMessage);
 
             await channel.send({ 
                 embeds: [goodbyeEmbed] 

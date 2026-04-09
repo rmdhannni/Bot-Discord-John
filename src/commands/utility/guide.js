@@ -81,8 +81,8 @@ class GuideCommand extends BaseCommand {
                     .addFields(
                         { name: '🛠️ Core Setup', value: '`/setup` (Set Welcome & Booster Role), `/setup_snipe` (Set Role Investigasi Data), `/permission` (Kunci command rahasia).' },
                         { name: '🎁 Level Rewards', value: '`/setup_rewards` (Otomatis memberikan tanda pengenal/Role saat Warga Gotham mencapai Level tertentu).' },
-                        { name: '🎖️ Master Badge & Background', value: '`/badge` (Buat lencana khusus/berbatas waktu dan bagikan ke warga), `/background` (Pasang profil kustom jalanan Gotham).' },
-                        { name: '🏆 Gelar Kepahlawanan', value: '`/achievements_admin` (Buat gelar pahlawan Gotham dan bagikan).' },
+                        { name: '🎖️ Master Badge & Background', value: '`/badge` (Buat, edit, hapus, tarik, atau lihat daftar lencana khusus dan bagikan ke warga), `/background` (Pasang profil kustom jalanan Gotham).' },
+                        { name: '🏆 Gelar Kepahlawanan', value: '`/achievements_admin` (Buat, edit, hapus, tarik, atau lihat daftar hasil cetak gelar dan bagikan).' },
                         { name: '📜 Papan Bounty GCPD', value: '`/mission_admin` (Buat Target Operasi berbatas waktu dengan hadiah XP/Role/Lencana).' }
                     );
             } 
@@ -105,7 +105,7 @@ class GuideCommand extends BaseCommand {
                         { name: '`/missions`', value: 'Akses Papan Buronan GCPD. Jalankan operasi target dan kumpulkan bayarannya di tengah malam!' },
                         { name: '`/claim`', value: 'Klaim Pasokan Gelap (Badge Limited Edition) sebelum truk menghilang dari radar.' },
                         { name: '`/giftbadge`', value: 'Berbagi harta jarahan Lencana ke Warga Gotham lainnya secara rahasia.' },
-                        { name: '`/mybadges` & `/achievements`', value: 'Atur lencana mana yang ingin disombongkan di KTP Gotham-mu (Maks 8 Badge, Maks 3 Gelar).' }
+                        { name: '`/preview [badge/achievement]`', value: 'Pilih lencana atau gelar kehormatan (Achievement) yang ingin kamu pamerkan di kartu profil.' }
                     );
             }
             else if (selected === 'utility') {

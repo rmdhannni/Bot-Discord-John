@@ -6,6 +6,30 @@ module.exports = {
     once: false,
 
     async execute(interaction, client) {
+        // ==========================================================
+        // 📥 COMPONENT HANDLER (SELECT MENU, BUTTONS)
+        // ==========================================================
+        if (interaction.isAnySelectMenu()) {
+            const SetupCommand = require('../../commands/admin/setup');
+            if (interaction.customId === 'select_snipe_roles' || interaction.customId === 'select_staff_roles') {
+                return SetupCommand.handleComponent(interaction);
+            }
+            return;
+        }
+
+        // ==========================================================
+        // 📥 MODAL SUBMIT HANDLER
+        // ==========================================================
+        if (interaction.isModalSubmit()) {
+            const SetupCommand = require('../../commands/admin/setup');
+            if (interaction.customId.startsWith('modal_welcome_edit') || 
+                interaction.customId.startsWith('modal_goodbye_edit') ||
+                interaction.customId.startsWith('modal_level_edit')) {
+                return SetupCommand.handleModal(interaction);
+            }
+            return;
+        }
+
         // Abaikan jika bukan slash command
         if (!interaction.isChatInputCommand()) return;
 
